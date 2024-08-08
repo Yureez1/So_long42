@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 17:07:41 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/08/08 16:58:47 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:04:22 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ void	map_parsing(data_game_t *data, const char *file_path)
 		x = 0;
 		while (line[x])
 		{
-			if (line[x] == '1')
+			if (line[x] == '0')
+			{
+				mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->img_floor, x *
+				tile_size, line_index * tile_size);
+			}
+			else if (line[x] == '1')
 			{
 				mlx_put_image_to_window(data->mlx_ptr, data->mlx_win,
 					data->img_wall, x * tile_size, line_index * tile_size);
@@ -64,11 +69,6 @@ void	map_parsing(data_game_t *data, const char *file_path)
 			{
 				mlx_put_image_to_window(data->mlx_ptr, data->mlx_win,
 					data->img_collectible, x * tile_size, line_index * tile_size);
-			}
-			else if (line[x] == '0')
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->img_floor, x *
-				tile_size, line_index * tile_size);
 			}
 			x++;
 		}
