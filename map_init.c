@@ -6,27 +6,40 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:50:53 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/07/22 17:35:05 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:00:16 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/so_long.h"
+#include "so_long.h"
+#include "get_next_line.h"
 #include "mlx/mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-void	load_image(data_game_img *data, const char *file_path)
+typedef struct data_game_s
+{
+	void	*mlx_ptr;
+	void	*mlx_win;
+	void	*img;
+}			data_game_t;
+
+/*void	read_map(data_game_t *data)
+{
+	get_next_line(map1);
+}
+*/
+void	load_image(data_game_t *data, const char *file_path)
 {
 	int	width;
 	int	height;
 
-	data ->img = mlx_xpm_file_to_image(data->mlx_ptr, (char *)file_path, &width,
+	data->img = mlx_xpm_file_to_image(data->mlx_ptr, (char *)file_path, &width,
 			&height);
 	if (data->img == NULL)
 		exit(EXIT_FAILURE);
 }
 
-void	map_parsing(data_game_img *data, const char *file_path)
+void	map_parsing(data_game_t *data, const char *file_path)
 {
 	int x;
 	int y;
@@ -52,7 +65,7 @@ void	map_parsing(data_game_img *data, const char *file_path)
 	}
 }
 
-void	map_parsing_error(data_game_img *data)
+void	map_parsing_error(data_game_t *data)
 {
 	if(data->img != NULL)
 		mlx_destroy_image(data->mlx_ptr, data->img);
