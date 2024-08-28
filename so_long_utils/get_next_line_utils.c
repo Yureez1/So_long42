@@ -6,11 +6,11 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:26 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/06/27 16:13:46 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:39:49 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "so_long_utils.h"
 
 // TO EXTRACT A SUB STRING
 char	*ft_substr(const char *s, size_t start, size_t len)

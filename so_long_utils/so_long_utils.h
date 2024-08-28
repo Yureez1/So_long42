@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:31 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/07/23 13:50:06 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:08:42 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ char	*ft_strdup(const char *src);
 char	*ft_strjoin(const char *s1, const char *s2);
 size_t	ft_strlen(const char *s);
 void	free_stash(void) __attribute__((destructor));
+char *ft_strncpy(char *dest, const char *src, size_t length);
+size_t	ft_strnlen(char const *str, size_t length);
 
 #endif

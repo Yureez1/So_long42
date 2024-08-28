@@ -6,11 +6,11 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:29 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/07/02 12:11:34 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:39:52 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "so_long_utils.h"
 
 void	free_stash(void)
 {

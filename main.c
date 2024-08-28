@@ -5,120 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 17:07:41 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/08/08 17:04:22 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/08/23 17:29:31 by jbanchon          #+#    #+#             */
+/*   Updated: 2024/08/28 14:45:00 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include "mlx/mlx.h"
 #include "so_long.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "mlx/mlx.h"
+#include "so_long_utils/so_long_utils.h"
 
-typedef struct data_game_s
+//Function to initialise the structure of window
+window_t *init_window_struct(void)
 {
-	void	*mlx_ptr;
-	void	*mlx_win;
-	void	*img_wall;
-	void	*img_collectible;
-	void	*img_floor;
-}			data_game_t;
-
-void		map_parsing_error(data_game_t *data);
-
-void	load_image(void **img, data_game_t *data, const char *file_path)
-{
-	int	width;
-	int	height;
+	window_t *data;
 	
-	*img = mlx_xpm_file_to_image(data->mlx_ptr, (char *)file_path, &width, &height);
-	if(*img == NULL)
-		exit(EXIT_FAILURE);
+	data = malloc(sizeof(window_t));
+	if (data == NULL)
+		return (NULL);
+	data->mlx_ptr = NULL;
+	data->mlx_win = NULL;
+	return (data);
 }
 
-void	map_parsing(data_game_t *data, const char *file_path)
+// Function to initialie connection
+int init_mlx_connection(window_t *data)
 {
-	int		x;
-	int		tile_size;
-	int		fd;
-	char	*line;
-	int		line_index;
-
-	tile_size = 16;
-	line_index = 0;
-	fd = open(file_path, O_RDONLY);
-	if (fd < 0)
-		map_parsing_error(data);
-	while ((line = get_next_line(fd)) != NULL)
+	data->mlx_ptr = mlx_init();
+	if(data -> mlx_ptr == NULL)
 	{
-		x = 0;
-		while (line[x])
-		{
-			if (line[x] == '0')
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->img_floor, x *
-				tile_size, line_index * tile_size);
-			}
-			else if (line[x] == '1')
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->mlx_win,
-					data->img_wall, x * tile_size, line_index * tile_size);
-			}
-			else if (line[x] == 'C')
-			{
-				mlx_put_image_to_window(data->mlx_ptr, data->mlx_win,
-					data->img_collectible, x * tile_size, line_index * tile_size);
-			}
-			x++;
-		}
-		free(line);
-		line_index++;
+		free(data);
+		return (EXIT_FAILURE);
 	}
-	close(fd);
+	return (0);
 }
-
-void	map_parsing_error(data_game_t *data)
+int create_mlx_window(window_t *data, int width, int height, const char *title)
 {
-	if (data->img_wall != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->img_wall);
-	if (data->img_collectible != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->img_collectible);
-	if (data->img_floor != NULL)
-		mlx_destroy_image(data->mlx_ptr, data-> img_floor);
-	if (data->mlx_win != NULL)
-		mlx_destroy_window(data->mlx_ptr, data->mlx_win);
-	if (data->mlx_ptr != NULL)
+	data->mlx_win = mlx_new_window(data->mlx_ptr, width, height, (char *)title);
+	if (data->mlx_win == NULL)
 	{
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
+		free(data);
+		return (EXIT_FAILURE);
 	}
-	exit(EXIT_FAILURE);
+	return (0);
 }
 
-int	main(void)
+// Function to initialise the window
+int iniatializing_window(void)
 {
-	data_game_t	*data;
-
-	data = malloc(sizeof(data_game_t));
-	if (data == NULL)
+	window_t *data;
+	
+	data = init_window_struct();
+	if(data == NULL)
 		return (EXIT_FAILURE);
-	data->mlx_ptr = mlx_init();
-	if (data->mlx_ptr == NULL)
-	{
-		free(data);
+	if(init_mlx_connection(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	}
-	data->mlx_win = mlx_new_window(data->mlx_ptr, 1920, 1080, "Map Parsing");
-	if (data->mlx_win == NULL)
-	{
-		free(data);
+	if (create_mlx_window(data, 860, 640, "MY_MAP") == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	}
-	load_image(&data->img_wall, data, "./game_img/wall.xpm");
-	load_image(&data->img_collectible, data, "./game_img/key.xpm");
-	load_image(&data->img_floor, data, "./game_img/floor.xpm");
-	map_parsing(data, "./maps/map1.ber");
 	mlx_loop(data->mlx_ptr);
+	mlx_destroy_window(data->mlx_ptr, data->mlx_win);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
+	free(data);
 	return (0);
+}
+
+int main(void)
+{
+	return iniatializing_window();
+	
 }
