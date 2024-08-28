@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:29:31 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/08/28 14:45:00 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:13:05 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ window_t *init_window_struct(void)
 int init_mlx_connection(window_t *data)
 {
 	data->mlx_ptr = mlx_init();
-	if(data -> mlx_ptr == NULL)
+	if(data->mlx_ptr == NULL)
 	{
 		free(data);
 		return (EXIT_FAILURE);
@@ -52,7 +52,7 @@ int create_mlx_window(window_t *data, int width, int height, const char *title)
 }
 
 // Function to initialise the window
-int iniatializing_window(void)
+/*int initializing_window(void)
 {
 	window_t *data;
 	
@@ -61,7 +61,7 @@ int iniatializing_window(void)
 		return (EXIT_FAILURE);
 	if(init_mlx_connection(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (create_mlx_window(data, 860, 640, "MY_MAP") == EXIT_FAILURE)
+	if (create_mlx_window(data, 1920, 1080, "MY_MAP") == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	mlx_loop(data->mlx_ptr);
 	mlx_destroy_window(data->mlx_ptr, data->mlx_win);
@@ -69,10 +69,29 @@ int iniatializing_window(void)
 	free(data->mlx_ptr);
 	free(data);
 	return (0);
-}
+}*/
 
 int main(void)
 {
-	return iniatializing_window();
+	window_t *window;
+	map_parsing_t map;
 	
+	window = init_window_struct();
+	if (window == NULL)
+		return (EXIT_FAILURE);
+	if (init_mlx_connection(window) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (create_mlx_window(window, 860, 640, "MY_MAP") == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (parse_map("maps/map1.ber", &map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (load_textures(window) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	render_map(window, &map);
+	mlx_loop(window->mlx_ptr);
+	mlx_destroy_window(window->mlx_ptr, window->mlx_win);
+	mlx_destroy_display(window->mlx_ptr);
+	free(window->mlx_ptr);
+	free(window);
+	return (0);
 }

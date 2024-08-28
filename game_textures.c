@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:35:10 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/08/28 14:41:17 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:43:22 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	parse_map(const char *filename, map_parsing_t *map)
 	int		i;
 
 	i = 0;
-	fd = open(filename, O_RDONLY);
+	fd = open("maps/map1.ber", O_RDONLY);
 	if (fd < 0)
 		return (EXIT_FAILURE);
 	while ((line = get_next_line(fd)) != NULL && i < MAX_HEIGHT)
