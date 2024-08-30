@@ -6,11 +6,14 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:29 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/08/28 14:39:52 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/29 22:45:22 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_utils.h"
+#include <stdio.h> // Pour perror
+#include <stdlib.h>
+#include <unistd.h>
 
 void	free_stash(void)
 {
@@ -19,52 +22,22 @@ void	free_stash(void)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash = NULL;
 	char		*line;
 	char		*buf;
-	
-	if (fd < -0 || BUFFER_SIZE <= 0)
-	{
-		if (stash)
-			free(stash);
-		stash = NULL;
-		return (NULL);
-	}
-	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buf || read(fd, buf, 0) < 0)
-	{
-		free(stash);
-		free(buf);
-		stash = NULL;
-		return (NULL);
-	}
-	line = ft_fill_buffer(fd, stash, buf);
-	free(buf);
-	if (!line)
-		return (NULL);
-	stash = ft_define_line(line);
-	return (line);
-}
+	char		*temp;
+	size_t		i;
 
-// FONCTION QUI LIT LE FICHIER
-char	*ft_fill_buffer(int fd, char *stash, char *buf)
-{
-	int		read_bytes;
-	char	*temp;
-
-	read_bytes = 1;
-	while (read_bytes > 0)
+	line = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	while (read(fd, buf, BUFFER_SIZE) > 0)
 	{
-		read_bytes = read(fd, buf, BUFFER_SIZE);
-		if (read_bytes == -1)
-		{
-			free(stash);
-			return (NULL);
-		}
-		else if (read_bytes == 0)
-			break ;
-		buf[read_bytes] = '\0';
-		if (!stash)
+		buf[BUFFER_SIZE] = '\0';
+		if (stash == NULL)
 			stash = ft_strdup("");
 		temp = stash;
 		stash = ft_strjoin(temp, buf);
@@ -72,25 +45,20 @@ char	*ft_fill_buffer(int fd, char *stash, char *buf)
 		if (ft_strchr(buf, '\n'))
 			break ;
 	}
-	return (stash);
-}
-
-char	*ft_define_line(char *line_buf)
-{
-	size_t	i;
-	char	*stash;
-
-	i = 0;
-	while (line_buf[i] != '\n' && line_buf[i])
-		i++;
-	if (line_buf[i] == '\0')
-		return (NULL);
-	stash = ft_substr(line_buf, i + 1, ft_strlen(line_buf) - (i + 1));
-	if (!stash || *stash == '\0')
+	free(buf);
+	if (stash == NULL || *stash == '\0')
 	{
 		free(stash);
 		stash = NULL;
+		return (NULL);
 	}
-	line_buf[i + 1] = '\0';
-	return (stash);
+	i = 0;
+	while (stash[i] != '\n' && stash[i] != '\0')
+		i++;
+	line = ft_substr(stash, 0, (stash[i] == '\n') ? i + 1 : i);
+	temp = stash;
+	stash = ft_substr(stash, (stash[i] == '\n') ? i + 1 : i, ft_strlen(stash)
+			- ((stash[i] == '\n') ? i + 1 : i));
+	free(temp);
+	return (line);
 }

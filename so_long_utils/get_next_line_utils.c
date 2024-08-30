@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:26 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/08/28 14:39:49 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/08/29 22:43:55 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,54 +57,59 @@ char	*ft_strchr(const char *s, int c)
 }
 // TO COPY THE STRING READ
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(const char *s1)
 {
-	char	*dest;
-	int		i;
-	int		strlen;
+	char	*copy;
+	size_t	len;
+	size_t	i;
 
-	i = 0;
-	strlen = ft_strlen(src);
-	dest = malloc(sizeof(char) * (strlen + 1));
-	if (dest == NULL)
+	if (s1 == NULL)
 		return (NULL);
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	len = ft_strlen(s1);
+	copy = malloc(len + 1);
+	if (copy == NULL)
+		return (NULL);
+	for (i = 0; i < len; i++)
+		copy[i] = s1[i];
+	copy[len] = '\0';
+	return (copy);
 }
+
 // TO CONCATENATE THE DIFFERENTS STRINGS/CHARACTER READ
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*len_final;
-	int		size;
-	int		i;
-	int		j;
+	char	*result;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	size_t	j;
 
-	size = ft_strlen(s1) + ft_strlen(s2);
-	len_final = (char *)malloc(sizeof(char) * (size + 1));
-	if (len_final == NULL)
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	result = malloc(len1 + len2 + 1);
+	if (result == NULL)
 		return (NULL);
 	i = 0;
-	while (s1[i] != '\0')
+	while (i < len1)
 	{
-		len_final[i] = s1[i];
+		result[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (s2[j] != '\0')
+	while (j < len2)
 	{
-		len_final[i] = s2[j];
-		i++;
+		result[i + j] = s2[j];
 		j++;
 	}
-	len_final[i] = '\0';
-	return (len_final);
+	result[i + j] = '\0';
+	return (result);
 }
+
 // CHECK THE LENGTH TO MALLOC
 
 size_t	ft_strlen(const char *s)
