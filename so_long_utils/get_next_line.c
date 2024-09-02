@@ -6,59 +6,105 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:29 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/08/29 22:45:22 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:58:47 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_utils.h"
-#include <stdio.h> // Pour perror
-#include <stdlib.h>
-#include <unistd.h>
 
-void	free_stash(void)
+t_node	*create_new_node(char *content)
 {
-	get_next_line(-23);
+	t_node	*new_node;
+
+	new_node = malloc(sizeof(t_node));
+	if (!new_node)
+		return (NULL);
+	new_node->content = ft_strdup(content);
+	new_node->next = NULL;
+	return (new_node);
+}
+
+void	append_node(t_node **list, char *content)
+{
+	t_node	*new_node;
+	t_node	*temp;
+
+	new_node = create_new_node(content);
+	if (!new_node)
+		return ;
+	if (*list == NULL)
+	{
+		*list = new_node;
+		return ;
+	}
+	temp = *list;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = new_node;
+}
+
+void	free_node(t_node *node)
+{
+	if (node)
+	{
+		if (node->content)
+			free(node->content);
+		free(node);
+	}
+}
+void	free_list(t_node *list)
+{
+	t_node	*temp;
+
+	while (list)
+	{
+		temp = list;
+		list = list->next;
+		free_node(temp);
+	}
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*stash = NULL;
-	char		*line;
-	char		*buf;
-	char		*temp;
-	size_t		i;
+	static t_node	*stash;
+	char			buffer[BUFFER_SIZE + 1];
+	ssize_t			bytes_read;
 
-	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	stash = NULL;
+	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
-	while (read(fd, buf, BUFFER_SIZE) > 0)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read < 0)
 	{
-		buf[BUFFER_SIZE] = '\0';
-		if (stash == NULL)
-			stash = ft_strdup("");
-		temp = stash;
-		stash = ft_strjoin(temp, buf);
-		free(temp);
-		if (ft_strchr(buf, '\n'))
-			break ;
-	}
-	free(buf);
-	if (stash == NULL || *stash == '\0')
-	{
-		free(stash);
-		stash = NULL;
+		if (stash)
+			return (extract_line(&stash));
 		return (NULL);
 	}
-	i = 0;
-	while (stash[i] != '\n' && stash[i] != '\0')
-		i++;
-	line = ft_substr(stash, 0, (stash[i] == '\n') ? i + 1 : i);
-	temp = stash;
-	stash = ft_substr(stash, (stash[i] == '\n') ? i + 1 : i, ft_strlen(stash)
-			- ((stash[i] == '\n') ? i + 1 : i));
-	free(temp);
-	return (line);
+	buffer[bytes_read] = '\0';
+	save_remaining(&stash, buffer);
+	return (extract_line(&stash));
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*line;
+
+	// Ouvrir le fichier
+	fd = open("../maps/map1.ber", O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error opening file");
+		return (1);
+	}
+	// Lire les lignes du fichier
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		// Traitement de la ligne
+		printf("%s", line);
+		free(line); // Ne pas oublier de libérer la mémoire
+	}
+	// Fermer le fichier
+	close(fd);
+	return (0);
 }
