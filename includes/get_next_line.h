@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_utils.h                                    :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:31 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/02 19:29:15 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:06:50 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,23 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 5
 # endif
 
 # include <fcntl.h>
-# include <stddef.h>
-# include <stdio.h>
-# include <stdlib.h>
 # include <unistd.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-typedef struct s_node
-{
-	char			*content;
-	struct s_node	*next;
-}					t_node;
-
-size_t				ft_strlen(const char *s);
-char				*ft_strdup(const char *s1);
-char				*ft_strchr(const char *s, int c);
-char				*extract_line(t_node **stash);
-void				save_remaining(t_node **stash, char *buffer);
-t_node				*create_new_node(char *content);
-void				append_node(t_node **list, char *content);
-void				free_node(t_node *node);
-void				free_list(t_node *list);
-char				*get_next_line(int fd);
-char				*ft_strjoin(char const *s1, char const *s2);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
+char	*get_next_line(int fd);
+char	*ft_fill_buffer(int fd, char *buf, char *stash);
+char	*ft_define_line(char *line_buf);
+char	*ft_substr(const char *s, size_t start, size_t len);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *src);
+char	*ft_strjoin(const char *s1, const char *s2);
+size_t	ft_strlen(const char *s);
+void	free_stash(void) __attribute__((destructor));
 
 #endif

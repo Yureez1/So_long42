@@ -6,11 +6,11 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:18:31 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/02 20:03:50 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:35:05 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_utils.h"
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

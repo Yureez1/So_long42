@@ -1,47 +1,53 @@
-# Compilateur et options
-CC = cc
-CFLAGS = -Werror -Wall -Wextra
-MLX_DIR = /home/jbanchon/github/Cercle_2/So_long42/mlx
-LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
-INCLUDES = -I$(MLX_DIR) -Iso_long42
-
-# Répertoire des fichiers sources et objets
-SRC_DIR = so_long42
-OBJ_DIR = $(SRC_DIR)/obj
-
-# Liste des fichiers sources
-SOURCES = $(SRC_DIR)/main.c \
-          $(SRC_DIR)/so_long_utils/get_next_line.c \
-          $(SRC_DIR)/so_long_utils/get_next_line_utils.c
-
-# Liste des fichiers objets
-OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
-
-# Nom de l'exécutable
 NAME = so_long
 
-# Règle par défaut
+# Compilation and options
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+
+# Path to directories
+SRC_DIR = srcs
+OBJ_DIR = objs
+INCLUDE_DIR = includes
+MLX_DIR = /home/jbanchon/github/Cercle_2/so_long42/mlx
+
+# Sources files
+SRCS = $(wildcard $(SRC_DIR)/init/*.c) \
+	$(wildcard $(SRC_DIR)/parsing/*.c) \
+	$(wildcard $(SRC_DIR)/errors/*.c) \
+	$(wildcard $(SRC_DIR)/graphics/*.c) \
+	$(wildcard $(SRC_DIR)/events/*.c) \
+	$(SRC_DIR)/main.c \
+	get_next_line/get_next_line.c \
+	get_next_line/get_next_line_utils.c
+
+# Objects files
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+
+# Options for MLX
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
+INCLUDES = -Iincludes -I$(MLX_DIR) -Iget_next_line
+
+# Default setting
 all: $(NAME)
 
-# Règle pour générer l'exécutable
-$(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(LIBS)
+# Final compilation program
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
-# Règle pour compiler les fichiers .c en .o
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(OBJ_DIR)
+# Compilation objects files
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Nettoyage des fichiers objets
+# Cleaning objects files
 clean:
-	rm -f $(OBJECTS)
+	rm -rf $(OBJ_DIR)
 
-# Nettoyage complet
+# Cleaning all
 fclean: clean
 	rm -f $(NAME)
 
-# Rebuild complet
+# Rebuilding all
 re: fclean all
 
 .PHONY: all clean fclean re
-
