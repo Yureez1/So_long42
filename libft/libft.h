@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:27:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/05/31 16:21:26 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:27:34 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memset(void *pointer, int value, size_t count);
 size_t				ft_strlen(char const *str);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-char				*ft_strnstr(const char *big, const char *little,
-						size_t len);
+char				*ft_strnstr(const char *big, const char *little, size_t len);
 char				*ft_strrchr(const char *str, int c);
 char				*ft_strchr(const char *s, int c);
 int					ft_tolower(int character);
@@ -40,7 +39,7 @@ int					ft_toupper(int character);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 char				*ft_strdup(char const *src);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_substr(char const *s, unsigned int start,size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);

@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:31 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/03 15:06:50 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:36:22 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 # endif
 
 # include <fcntl.h>
-# include <unistd.h>
 # include <stddef.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 char	*get_next_line(int fd);
 char	*ft_fill_buffer(int fd, char *buf, char *stash);
 char	*ft_define_line(char *line_buf);
-char	*ft_substr(const char *s, size_t start, size_t len);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *src);
 char	*ft_strjoin(const char *s1, const char *s2);

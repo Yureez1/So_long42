@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map.c                                         :+:      :+:    :+:   */
+/*   ft_printid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 15:16:35 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/04 18:13:02 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/06/10 15:19:59 by jbanchon          #+#    #+#             */
+/*   Updated: 2024/09/04 20:00:10 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
+#include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-void	init_map(t_data *data)
+size_t	ft_numlen(int value)
 {
-	data->i = 0;
-	data->j = 0;
-	data->map.player_count = 0;
-	data->map.exit_count = 0;
-	data->map.collectible_count = 0;
-	data->map.collected = 0;
-	data->map.can_exit = 0;
-	data->count_step = 0;
-	data->win_height = data->map.line_count * IMG_SIZE;
-	data->win_width = (ft_strlen(data->map.grid[0]) - 1) * IMG_SIZE;
-	data->img_height = IMG_SIZE;
-	data->img_width = IMG_SIZE;
+	size_t	length;
+
+	length = 0;
+	if (value == 0)
+		return (1);
+	if (value < 0)
+	{
+		value = -value;
+		length++;
+	}
+	while (value != 0)
+	{
+		value = value / 10;
+		length++;
+	}
+	return (length);
+}
+
+void	ft_printid(int value, int *counter)
+{
+	ft_putnbr_fd(value, 1);
+	(*counter) += ft_numlen(value);
 }

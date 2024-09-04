@@ -6,7 +6,14 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:54 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/03 15:16:54 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:55:07 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/so_long.h"
+
+void	error_msg(const char *message)
+{
+	ft_printf("Error: %s\n", message);
+	exit(EXIT_FAILURE);
+}
