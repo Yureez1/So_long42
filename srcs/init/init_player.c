@@ -6,13 +6,13 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:33 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/04 17:28:30 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/05 21:05:04 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	init_player(t_data *data)
+int	init_player(t_data *data)
 {
 	int x;
 	int y;
@@ -38,4 +38,5 @@ void	init_player(t_data *data)
 		error_msg("Map must contain exactly one player.");
 		exit(1);
 	}
+	return (0);
 }

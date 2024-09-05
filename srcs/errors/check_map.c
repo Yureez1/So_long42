@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:56 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/04 17:29:21 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/05 21:06:28 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_map(t_data *data)
 {
 	check_map_walls(data);
 	if(data->map.collectible_count < 1)
-		error_msg("The map must have at least one colletible");
+		error_msg("The map must have at least one collectible");
 	if(data->map.exit_count != 1)
 		error_msg("The map must have exactly one exit");
 	if(data->map.player_count != 1)

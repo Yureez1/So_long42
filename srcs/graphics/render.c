@@ -6,13 +6,13 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:40 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/04 18:16:59 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:05:51 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	render_map(t_data *data)
+int	render_map(t_data *data)
 {
 	int	x;
 	int	y;
@@ -37,4 +37,5 @@ void	render_map(t_data *data)
 		}
 		x++;
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 17:14:36 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/04 20:02:34 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:27:28 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 
 void	ft_type(const char c, va_list args, int *counter)
 {
-	size_t	len;
-
-	len = 0;
 	if (c == 'c')
 	{
 		ft_putchar(va_arg(args, int));

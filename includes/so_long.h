@@ -8,6 +8,7 @@
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 
 # define IMG_SIZE 16
@@ -60,7 +61,9 @@ int				returned_line(char *filename);
 void			set_input_map(int row, t_data *data);
 int				allocate_map_rows(t_data *data);
 int				create_map(char *filename, t_data *data);
-void			init_map(t_data *data);
+int				init_map(t_data *data);
+int				init_player(t_data *data);
+void			count_map_elements(t_data *data);
 
 // Errors
 void			check_map(t_data *data);
@@ -68,10 +71,12 @@ void			check_map_walls(t_data *data);
 void			error_msg(const char *message);
 
 // Graphics
-void			init_window(t_data *data);
-void			load_images(t_data *data);
+int				init_window(t_data *data);
+int				load_images(t_data *data);
 void			put_img(t_data *data, void *sprite, int x, int y);
-void			render_map(t_data *data);
+int				render_map(t_data *data);
+void			images_loop(t_data *data);
+void			destroy_image(t_data *data);
 
 // Parsing
 
