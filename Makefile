@@ -2,7 +2,7 @@ NAME = so_long
 
 # Compilation and options
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g
 
 # Path to directories
 SRC_DIR = srcs

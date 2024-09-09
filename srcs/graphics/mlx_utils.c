@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:43 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/05 21:03:15 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/09 17:49:39 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,17 @@ int	init_window(t_data *data)
 int	load_images(t_data *data)
 {
 	data->sprites.player = mlx_xpm_file_to_image(data->mlx_ptr,
-			"assets/player.xpm", &data->sprites.width, &data->sprites.height);
-	if (!data->sprites.player)
-		error_msg("Failed to load player image.");
-	data->sprites.wall = mlx_xpm_file_to_image(data->mlx_ptr, "assets/wall.xpm",
+			PLAYER, &data->sprites.width, &data->sprites.height);
+	data->sprites.wall = mlx_xpm_file_to_image(data->mlx_ptr, WALL,
 			&data->sprites.width, &data->sprites.height);
-	if (!data->sprites.wall)
-		error_msg("Failed to load wall image.");
-	data->sprites.exit = mlx_xpm_file_to_image(data->mlx_ptr, "assets/door.xpm",
-			&data->sprites.width, &data->sprites.height);
-	if (!data->sprites.exit)
-		error_msg("Failed to load exit image");
-	data->sprites.floor = mlx_xpm_file_to_image(data->mlx_ptr,
-			"assets/floor.xpm", &data->sprites.width, &data->sprites.height);
-	if(!data->sprites.floor)
-		error_msg("Failed to load floor image");
-	data->sprites.collectible = mlx_xpm_file_to_image(data->mlx_ptr,
-			"assets/key.xpm", &data->sprites.width, &data->sprites.height);
-	if(!data->sprites.collectible)
-		error_msg("Failed to load collectible image");
-	return 1;
-}
 
-void put_img(t_data *data, void *sprite, int x, int y)
-{
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, sprite, x * IMG_SIZE, y * IMG_SIZE);
+	data->sprites.exit = mlx_xpm_file_to_image(data->mlx_ptr, EXIT,
+			&data->sprites.width, &data->sprites.height);
+	data->sprites.floor = mlx_xpm_file_to_image(data->mlx_ptr,
+			FLOOR, &data->sprites.width, &data->sprites.height);
+	data->sprites.collectible = mlx_xpm_file_to_image(data->mlx_ptr,
+			KEY, &data->sprites.width, &data->sprites.height);
+	return (EXIT_SUCCESS);
 }
 
 void	destroy_image(t_data *data)
@@ -70,10 +56,10 @@ void	destroy_image(t_data *data)
 	free(data->mlx_ptr);
 }
 
-void images_loop(t_data *data)
+void	images_loop(t_data *data)
 {
 	mlx_loop_hook(data->mlx_ptr, render_map, &data);
-	//mlx_hook(data.win, Keypress, KeyPressMask, &handle_keypress, &data);
-	//mlx_hook(data.win, ClientMessage, LeaveWindowMask, &handle_btnrelease, &data);
+	// mlx_hook(data.win, Keypress, KeyPressMask, &handle_keypress, &data);
+	// mlx_hook(data.win, ClientMessage, LeaveWindowMask, &handle_btnrelease, &data;
 	mlx_loop(data->mlx_ptr);
 }

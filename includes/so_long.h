@@ -12,6 +12,11 @@
 # include <unistd.h>
 
 # define IMG_SIZE 16
+# define WALL "assets/wall.xpm"
+# define FLOOR "assets/floor.xpm"
+# define KEY "assets/key.xpm"
+# define PLAYER "assets/character.xpm"
+# define EXIT "assets/door.xpm"
 
 typedef struct s_sprites
 {
@@ -58,12 +63,13 @@ typedef struct s_data
 // Game_init
 void			ft_free(char **grid);
 int				returned_line(char *filename);
-void			set_input_map(int row, t_data *data);
+void			set_input_map(int row, int fd, t_data *data);
 int				allocate_map_rows(t_data *data);
 int				create_map(char *filename, t_data *data);
 int				init_map(t_data *data);
 int				init_player(t_data *data);
 void			count_map_elements(t_data *data);
+void			count_elements_in_map(char **grid, t_data *data);
 
 // Errors
 void			check_map(t_data *data);

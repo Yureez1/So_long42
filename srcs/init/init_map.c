@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:35 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/05 21:04:36 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:36:27 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	init_map(t_data *data)
 		// Gestion d'erreur si le nombre de lignes est invalide
 		data->win_height = 0;
 		data->win_width = 0;
-		return 1 ;
+		return (0); // Indiquer un échec pour la gestion des erreurs
 	}
 	data->win_height = data->map.line_count * IMG_SIZE;
 	if (data->map.grid && data->map.grid[0])
@@ -60,5 +60,13 @@ int	init_map(t_data *data)
 	}
 	data->img_height = IMG_SIZE;
 	data->img_width = IMG_SIZE;
-	return (1);
+	// Débogage
+	printf("Map dimensions: %d x %d\n", data->win_width, data->win_height);
+	// Assurer que les dimensions sont valides
+	if (data->win_width <= 0 || data->win_height <= 0)
+	{
+		error_msg("Invalid window dimensions.");
+		return (0); // Indiquer un échec pour la gestion des erreurs
+	}
+	return (1); // Succès
 }

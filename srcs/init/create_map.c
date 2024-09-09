@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:38 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/05 21:32:14 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:15:53 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,28 +162,30 @@ int	returned_line(char *filename)
 	return (line_count);
 }
 
-void	put_input_in_map(int row, t_data *data)
+void	set_input_map(int row, int fd, t_data *data)
 {
 	int		column;
-	int		i;
 	char	*line;
-
-	column = 0;
-	i = 0;
-	line = get_next_line(data->map.grid);
+	
+	line = get_next_line(fd);
 	while (line)
 	{
+		column = 0;
 		data->map.grid[row] = ft_calloc(ft_strlen(line) + 1, sizeof(char));
 		if (!data->map.grid[row])
-			return ft_free(data->map.grid);
-		while (line[i] != '\0')
-			data->map.grid[row][column++] = line[i++];
+		{
+			ft_free(data->map.grid);
+			return;
+		}
+		while (line[column] != '\0')
+		{
+			data->map.grid[row][column] = line[column];
+			column++;
+		}
 		data->map.grid[row][column] = '\0';
 		free(line);
 		row++;
-		column = 0;
-		i = 0;
-		line = get_next_line(data->map.grid);
+		line = get_next_line(fd);
 	}
 	data->map.grid[row] = NULL;
 }
@@ -198,39 +200,21 @@ int	allocate_map_rows(t_data *data)
 
 int	create_map(char *filename, t_data *data)
 {
-	int		fd;
-	int		row;
-	char	*line;
+	int fd;
+	int row;
 
 	data->map.line_count = returned_line(filename);
-	if (data->map.line_count <= 0)
+	if(data->map.line_count <= 0)
 		return (0);
 	fd = open(filename, O_RDONLY);
-	if (fd < 0 || !allocate_map_rows(data))
+	if(fd < 0 || !allocate_map_rows(data))
 	{
 		if (fd >= 0)
-			close(fd);
+			close(fd);;
 		return (0);
 	}
 	row = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		data->map.grid[row] = ft_strdup(line);
-		if (!data->map.grid[row])
-		{
-			free(line);
-			ft_free(data->map.grid);
-			close(fd);
-			return (0);
-		}
-		free(line);
-		set_input_map(row, data);
-		row++;
-		line = get_next_line(fd);
-	}
-	data->map.grid[row] = NULL;
+	set_input_map(row, fd, data);
 	close(fd);
 	return (1);
 }
-
