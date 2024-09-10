@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:38 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/06 18:15:53 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:59:10 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void	set_input_map(int row, int fd, t_data *data)
 		if (!data->map.grid[row])
 		{
 			ft_free(data->map.grid);
+			close(fd);
 			return;
 		}
 		while (line[column] != '\0')

@@ -6,85 +6,71 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:24 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/09 18:06:41 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:02:22 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 #include <stdlib.h>
 
-void	clean_up(t_data *data)
+void	print_map(t_data *data)
 {
-	if (data->map.grid)
-		ft_free(data->map.grid);
-	// Ajoutez ici le nettoyage des autres ressources si nécessaire
+	int	i;
+
+	i = 0;
+	while (data->map.grid[i] != NULL)
+	{
+		printf("%s", data->map.grid[i]);
+		i++;
+	}
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-
-// Assuming these headers are included somewhere
-#include "so_long.h"
-
+// Fonction principale du programme
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	// Check for correct number of arguments
+	// Vérifier le nombre d'arguments
 	if (argc != 2)
 	{
 		fprintf(stderr, "Usage: %s <map_file>\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	// Initialize the map data
-	if (create_map(argv[1], &data) != 0)
+	// Initialiser la carte
+	if (create_map(argv[1], &data) != 1)
 	{
 		fprintf(stderr, "Error creating map from file %s\n", argv[1]);
 		return (EXIT_FAILURE);
 	}
-	if (init_map(&data) != 0)
+	print_map(&data);
+	init_map(&data);
+	// Vérifier la structure de la carte
+	if (!data.map.grid || data.map.height <= 0 || data.map.width <= 0)
 	{
-		fprintf(stderr, "Error initializing map\n");
+		fprintf(stderr, "Error: Invalid map structure\n");
+		ft_free(data.map.grid); // Libérer la mémoire allouée
 		return (EXIT_FAILURE);
 	}
-	if (count_elements_in_map(data->map.grid, &data) != 0)
-	{
-		fprintf(stderr, "Error counting elements in map\n");
-		return (EXIT_FAILURE);
-	}
-	// Uncomment check_map if you need to validate the map
-	// if (check_map(&data) != 0) {
-	//     fprintf(stderr, "Map validation failed\n");
-	//     return (EXIT_FAILURE);
-	// }
+	// Compter les éléments dans la carte
+	count_elements_in_map(data.map.grid, &data);
+	// Initialiser le joueur
 	if (init_player(&data) != 0)
 	{
 		fprintf(stderr, "Error initializing player\n");
+		ft_free(data.map.grid); // Libérer la mémoire allouée
 		return (EXIT_FAILURE);
 	}
-	if (init_window(&data) != 0)
-	{
-		fprintf(stderr, "Error initializing window\n");
-		return (EXIT_FAILURE);
-	}
+	// Charger les images
 	if (load_images(&data) != 0)
 	{
 		fprintf(stderr, "Error loading images\n");
+		ft_free(data.map.grid); // Libérer la mémoire allouée
 		return (EXIT_FAILURE);
 	}
-	if (render_map(&data) != 0)
-	{
-		fprintf(stderr, "Error rendering map\n");
-		return (EXIT_FAILURE);
-	}
-	images_loop(&data);
+	// Démarrer le rendu graphique
+	core_render(&data);
+	// Libérer les ressources après la fin du programme
 	destroy_image(&data);
-	// Free MLX resources
-	if (data.mlx_ptr)
-	{
-		mlx_destroy_window(data.mlx_ptr, data.win_ptr);
-		mlx_destroy_display(data.mlx_ptr);
-		free(data.mlx_ptr);
-	}
+	ft_free(data.map.grid); // Libérer la mémoire allouée
 	return (EXIT_SUCCESS);
 }

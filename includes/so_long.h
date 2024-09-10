@@ -11,7 +11,7 @@
 # include <string.h>
 # include <unistd.h>
 
-# define IMG_SIZE 16
+# define IMG_SIZE 32
 # define WALL "assets/wall.xpm"
 # define FLOOR "assets/floor.xpm"
 # define KEY "assets/key.xpm"
@@ -66,7 +66,7 @@ int				returned_line(char *filename);
 void			set_input_map(int row, int fd, t_data *data);
 int				allocate_map_rows(t_data *data);
 int				create_map(char *filename, t_data *data);
-int				init_map(t_data *data);
+void			init_map(t_data *data);
 int				init_player(t_data *data);
 void			count_map_elements(t_data *data);
 void			count_elements_in_map(char **grid, t_data *data);
@@ -77,10 +77,12 @@ void			check_map_walls(t_data *data);
 void			error_msg(const char *message);
 
 // Graphics
-int				init_window(t_data *data);
+int				render(t_data *data);
+void			render_background(t_data *data);
+void			render_elements(t_data *data);
+void			core_render(t_data *data);
 int				load_images(t_data *data);
 void			put_img(t_data *data, void *sprite, int x, int y);
-int				render_map(t_data *data);
 void			images_loop(t_data *data);
 void			destroy_image(t_data *data);
 
