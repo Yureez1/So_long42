@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:33 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/06 18:03:08 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:07:06 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	init_player(t_data *data)
 	}
 	return (0);
 }
-void	count_elements_in_map(char **grid, t_data *data)
+int	count_elements_in_map(char **grid, t_data *data)
 {
 	int	row;
 	int	col;
@@ -61,4 +61,9 @@ void	count_elements_in_map(char **grid, t_data *data)
 		}
 		row++;
 	}
+	if (!data->map.player_count || !data->map.exit_count
+		|| !data->map.collectible_count)
+		return (1);
+	else
+		return (0);
 }

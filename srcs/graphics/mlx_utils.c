@@ -6,27 +6,40 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:43 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/10 16:25:12 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/13 13:03:20 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
+int	init_window(t_data *data)
+{
+	data->mlx_ptr = mlx_init();
+	if (data->mlx_ptr == NULL)
+		return (1);
+	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win_width,
+				data->win_height, "So_long");
+	if (data->win_ptr == NULL)
+	{
+		free(data->win_ptr);
+		return (1);
+	}
+	return (0);
+}
+
 // Function to load sprites
 int	load_images(t_data *data)
 {
-	data->sprites.player = mlx_xpm_file_to_image(data->mlx_ptr,
-			PLAYER, &(data->sprites.width), &(data->sprites.height));
-	if(!data->sprites.player)
-		return(error_msg("Failed to load player sprite"), EXIT_FAILURE);
+	data->sprites.player = mlx_xpm_file_to_image(data->mlx_ptr, "assets/character.xpm",
+			&(data->sprites.width), &(data->sprites.height));
 	data->sprites.wall = mlx_xpm_file_to_image(data->mlx_ptr, WALL,
 			&(data->sprites.width), &(data->sprites.height));
 	data->sprites.exit = mlx_xpm_file_to_image(data->mlx_ptr, EXIT,
 			&(data->sprites.width), &(data->sprites.height));
-	data->sprites.floor = mlx_xpm_file_to_image(data->mlx_ptr,
-			FLOOR, &(data->sprites.width), &(data->sprites.height));
-	data->sprites.collectible = mlx_xpm_file_to_image(data->mlx_ptr,
-			KEY, &(data->sprites.width), &(data->sprites.height));
+	data->sprites.floor = mlx_xpm_file_to_image(data->mlx_ptr, FLOOR,
+			&(data->sprites.width), &(data->sprites.height));
+	data->sprites.collectible = mlx_xpm_file_to_image(data->mlx_ptr, KEY,
+			&(data->sprites.width), &(data->sprites.height));
 	return (EXIT_SUCCESS);
 }
 
@@ -46,6 +59,6 @@ void	images_loop(t_data *data)
 {
 	mlx_loop_hook(data->mlx_ptr, render, &data);
 	// mlx_hook(data.win, Keypress, KeyPressMask, &handle_keypress, &data);
-	// mlx_hook(data.win, ClientMessage, LeaveWindowMask, &handle_btnrelease, &data;
+	// mlx_hook(data.win, ClientMessage, LeaveWindowMask, &handle_btnrelease, &data);
 	mlx_loop(data->mlx_ptr);
 }

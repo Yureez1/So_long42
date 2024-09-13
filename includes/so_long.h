@@ -68,12 +68,11 @@ int				allocate_map_rows(t_data *data);
 int				create_map(char *filename, t_data *data);
 void			init_map(t_data *data);
 int				init_player(t_data *data);
-void			count_map_elements(t_data *data);
-void			count_elements_in_map(char **grid, t_data *data);
+int				count_elements_in_map(char **grid, t_data *data);
+void			print_map_dimensions(t_data *data);
 
 // Errors
 void			check_map(t_data *data);
-void			check_map_walls(t_data *data);
 void			error_msg(const char *message);
 
 // Graphics
@@ -85,6 +84,7 @@ int				load_images(t_data *data);
 void			put_img(t_data *data, void *sprite, int x, int y);
 void			images_loop(t_data *data);
 void			destroy_image(t_data *data);
+int				init_window(t_data *data);
 
 // Parsing
 

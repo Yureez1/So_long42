@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:35 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/10 14:51:54 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:36:51 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_map(t_data *data)
 	data->win_height = data->map.line_count * IMG_SIZE;
 	data->win_width = ft_strlen(data->map.grid[0]) * IMG_SIZE;
 
-	data->img_height = IMG_SIZE;
-	data->img_width = IMG_SIZE;
+	data->sprites.height = IMG_SIZE;
+	data->sprites.width = IMG_SIZE;
 }
 

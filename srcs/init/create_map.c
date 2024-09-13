@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:38 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/10 16:59:10 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:03:55 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,13 @@ void	set_input_map(int row, int fd, t_data *data)
 			column++;
 		}
 		data->map.grid[row][column] = '\0';
+		printf("Row %d: %s\n", row, data->map.grid[row]);
 		free(line);
 		row++;
 		line = get_next_line(fd);
 	}
 	data->map.grid[row] = NULL;
+	printf("Map reading completed\n");
 }
 
 int	allocate_map_rows(t_data *data)
@@ -218,4 +220,17 @@ int	create_map(char *filename, t_data *data)
 	set_input_map(row, fd, data);
 	close(fd);
 	return (1);
+}
+
+
+void	print_map_dimensions(t_data *data)
+{
+	int	y = 0;
+
+	while (data->map.grid[y] != NULL)
+	{
+		printf("Line %d length: %zu\n", y, ft_strlen(data->map.grid[y]));
+		y++;
+	}
+	printf("Total lines: %d\n", y);
 }
