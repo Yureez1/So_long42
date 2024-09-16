@@ -11,12 +11,37 @@
 # include <string.h>
 # include <unistd.h>
 
-# define IMG_SIZE 32
+/* 
+**
+Textures
+**
+*/
+# define IMG_SIZE 64
 # define WALL "assets/wall.xpm"
 # define FLOOR "assets/floor.xpm"
 # define KEY "assets/key.xpm"
 # define PLAYER "assets/character.xpm"
 # define EXIT "assets/door.xpm"
+/*
+** 
+Errors
+**
+*/
+# define FAILURE 0
+# define SUCCESS 1
+/*
+**
+Keys mouvements
+**
+*/
+# define A 97
+# define D 100
+# define S 115
+# define W 119
+# define ARROW_TOP 65362
+# define ARROW_BOT 65364
+# define ARROW_LEFT 65361
+# define ARROW_RIGHT 65363
 
 typedef struct s_sprites
 {
@@ -72,8 +97,12 @@ int				count_elements_in_map(char **grid, t_data *data);
 void			print_map_dimensions(t_data *data);
 
 // Errors
-void			check_map(t_data *data);
 void			error_msg(const char *message);
+int				count_elements_in_map(char **grid, t_data *data);
+int				check_top_bot(int row, char **grid);
+int				check_edges(int line_count, char **grid);
+int				check_rectangle(char **grid, int line_count);
+int				check_map(t_data *data);
 
 // Graphics
 int				render(t_data *data);
@@ -86,8 +115,12 @@ void			images_loop(t_data *data);
 void			destroy_image(t_data *data);
 int				init_window(t_data *data);
 
-// Parsing
-
 // Events
+void	player_mouv(t_data *data, int keysym);
+int	game_win(t_data *data);
+void	collected_coins(t_data *data, int keysym);
+int	check_next_mouv(t_data *data, int keysym, char tile);
+
+int	handle_resize(t_data *data);
 
 #endif

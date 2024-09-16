@@ -6,8 +6,15 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:51 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/04 17:28:53 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:35:50 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+int	handle_resize(t_data *data)
+{
+	render(data);
+	return (0);
+}
+
