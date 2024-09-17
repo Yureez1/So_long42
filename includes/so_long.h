@@ -6,6 +6,7 @@
 # include "../mlx/mlx.h"
 # include "get_next_line.h"
 # include <X11/keysym.h>
+# include <X11/X.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
@@ -116,11 +117,10 @@ void			destroy_image(t_data *data);
 int				init_window(t_data *data);
 
 // Events
-void	player_mouv(t_data *data, int keysym);
-int	game_win(t_data *data);
-void	collected_coins(t_data *data, int keysym);
-int	check_next_mouv(t_data *data, int keysym, char tile);
+void player_mouv(t_data *data, int x_offset, int y_offset);
 
+int handle_btnrelease(t_data *data);
+int handle_keypress(int keysym, t_data *data);
 int	handle_resize(t_data *data);
 
 #endif

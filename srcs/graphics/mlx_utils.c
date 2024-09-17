@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:43 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/16 15:56:46 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:34:47 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	destroy_image(t_data *data)
 
 void	images_loop(t_data *data)
 {
-	mlx_loop_hook(data->mlx_ptr, render, &data);
-	//mlx_hook(data->win_ptr, Keypress, KeyPressMask, &handle_keypress, &data);
-	//mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask, &handle_btnrelease, &data);
+	mlx_loop_hook(data->mlx_ptr, render, data);
+	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, handle_keypress, data);
+	mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask, handle_btnrelease, data);
 	mlx_loop(data->mlx_ptr);
 }

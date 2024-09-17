@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:33 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/16 12:08:05 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:10:56 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,19 @@ int	init_player(t_data *data)
 	int	y;
 
 	x = 0;
-	while (x < data->map.height)
+	while (data->map.grid[x])
 	{
 		y = 0;
-		while (y < data->map.width)
+		while (data->map.grid[x][y])
 		{
 			if (data->map.grid[x][y] == 'P')
 			{
 				data->player_x = x;
 				data->player_y = y;
-				data->map.player_count++;
 			}
 			y++;
 		}
 		x++;
-	}
-	if (data->map.player_count != 1)
-	{
-		error_msg("Map must contain exactly one player.");
-		exit(1);
 	}
 	return (0);
 }
