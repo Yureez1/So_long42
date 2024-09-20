@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:40 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/16 13:37:13 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:14:44 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ int render(t_data *data)
 		width = 0;
 		x++;
 	}
-	return (0);
+	return (SUCCESS);
 }

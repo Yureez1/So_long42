@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:43 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/17 11:34:47 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:14:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	init_window(t_data *data)
 	if (data->win_ptr == NULL)
 	{
 		free(data->win_ptr);
-		return (1);
+		return (FAILURE);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 // Function to load sprites
 int	load_images(t_data *data)
 {
-	data->sprites.player = mlx_xpm_file_to_image(data->mlx_ptr, "assets/character.xpm",
+	data->sprites.player = mlx_xpm_file_to_image(data->mlx_ptr, PLAYER,
 			&(data->sprites.width), &(data->sprites.height));
 	data->sprites.wall = mlx_xpm_file_to_image(data->mlx_ptr, WALL,
 			&(data->sprites.width), &(data->sprites.height));
@@ -40,7 +40,7 @@ int	load_images(t_data *data)
 			&(data->sprites.width), &(data->sprites.height));
 	data->sprites.collectible = mlx_xpm_file_to_image(data->mlx_ptr, KEY,
 			&(data->sprites.width), &(data->sprites.height));
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }
 
 void	destroy_image(t_data *data)

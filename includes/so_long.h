@@ -5,14 +5,14 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include "get_next_line.h"
-# include <X11/keysym.h>
 # include <X11/X.h>
+# include <X11/keysym.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
 
-/* 
+/*
 **
 Textures
 **
@@ -24,12 +24,13 @@ Textures
 # define PLAYER "assets/character.xpm"
 # define EXIT "assets/door.xpm"
 /*
-** 
+**
 Errors
 **
 */
-# define FAILURE 0
-# define SUCCESS 1
+# define ERROR -1
+# define FAILURE 1
+# define SUCCESS 0
 /*
 **
 Keys mouvements
@@ -43,6 +44,15 @@ Keys mouvements
 # define ARROW_BOT 65364
 # define ARROW_LEFT 65361
 # define ARROW_RIGHT 65363
+
+/*
+**
+Colors
+**
+*/
+# define RED "\033[1;31m"
+# define GREY "\033[1;30m"
+# define RESET "\033[0m"
 
 typedef struct s_sprites
 {
@@ -66,6 +76,7 @@ typedef struct s_map
 	int			collected;
 	int			can_exit;
 	int			line_count;
+	size_t		line_len;
 }				t_map;
 
 typedef struct s_data
@@ -82,8 +93,8 @@ typedef struct s_data
 	int			win_height;
 	int			img_width;
 	int			img_height;
-	int			i;
-	int			j;
+	int			x;
+	int			y;
 }				t_data;
 
 // Game_init
@@ -94,16 +105,16 @@ int				allocate_map_rows(t_data *data);
 int				create_map(char *filename, t_data *data);
 void			init_map(t_data *data);
 int				init_player(t_data *data);
-int				count_elements_in_map(char **grid, t_data *data);
+int				count_elements_in_map(t_data *data);
 void			print_map_dimensions(t_data *data);
 
 // Errors
-void			error_msg(const char *message);
-int				count_elements_in_map(char **grid, t_data *data);
-int				check_top_bot(int row, char **grid);
-int				check_edges(int line_count, char **grid);
-int				check_rectangle(char **grid, int line_count);
+void			error_msg(char *message, t_data *data);
+void			map_parameters(t_data *data);
 int				check_map(t_data *data);
+int				count_elements_in_map(t_data *data);
+void			check_columns(t_data *data);
+void			check_rows(t_data *data);
 
 // Graphics
 int				render(t_data *data);
@@ -117,10 +128,11 @@ void			destroy_image(t_data *data);
 int				init_window(t_data *data);
 
 // Events
-void player_mouv(t_data *data, int x_offset, int y_offset);
-
-int handle_btnrelease(t_data *data);
-int handle_keypress(int keysym, t_data *data);
-int	handle_resize(t_data *data);
+void			player_mouv(t_data *data, int x_offset, int y_offset);
+void			check_next_mouv(t_data *data, int x_offset, int y_offset);
+int				handle_btnrelease(t_data *data);
+int				handle_keypress(int keysym, t_data *data);
+int				handle_resize(t_data *data);
+void			can_exit(t_data *data);
 
 #endif

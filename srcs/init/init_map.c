@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:35 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/13 12:36:51 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:48:08 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	init_map(t_data *data)
 {
 	if (!data->map.grid || !data->map.grid[0])
 	{
-		error_msg("Map grid is empty or invalid");
+		error_msg("Map grid is empty or invalid", data);
 		exit(EXIT_FAILURE);
 	}
 
-	data->i = 0;
-	data->j = 0;
+	data->x = 0;
+	data->y = 0;
 	data->map.player_count = 0;
 	data->map.exit_count = 0;
 	data->map.collectible_count = 0;
