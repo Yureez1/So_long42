@@ -28,6 +28,7 @@ Textures
 Errors
 **
 */
+# define ERRORCHR "Error Char"
 # define ERROR -1
 # define FAILURE 1
 # define SUCCESS 0
@@ -53,6 +54,12 @@ Colors
 # define RED "\033[1;31m"
 # define GREY "\033[1;30m"
 # define RESET "\033[0m"
+
+typedef struct s_vector
+{
+	int			x;
+	int			y;
+}				t_vector;
 
 typedef struct s_sprites
 {
@@ -95,6 +102,8 @@ typedef struct s_data
 	int			img_height;
 	int			x;
 	int			y;
+	t_vector	player_pos;
+	t_vector	map_size;
 }				t_data;
 
 // Game_init
@@ -113,8 +122,14 @@ void			error_msg(char *message, t_data *data);
 void			map_parameters(t_data *data);
 int				check_map(t_data *data);
 int				count_elements_in_map(t_data *data);
+int				check_chars(t_data *data);
 void			check_columns(t_data *data);
 void			check_rows(t_data *data);
+void			check_map_playability(t_data *data);
+int	flood_fill(t_data *data, char **map_clone, t_vector pos, char *str);
+void			free_grid(char **grid_copy, int line_count);
+char			**copy_map(char **grid, int line_count);
+int total_elements(t_data *data, char **map_clone, char *elements);
 
 // Graphics
 int				render(t_data *data);
