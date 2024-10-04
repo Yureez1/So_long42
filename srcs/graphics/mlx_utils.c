@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:43 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/23 14:52:45 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:04:55 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	destroy_image(t_data *data)
 	mlx_destroy_image(data->mlx_ptr, data->sprites.exit);
 	mlx_destroy_image(data->mlx_ptr, data->sprites.floor);
 	mlx_destroy_image(data->mlx_ptr, data->sprites.collectible);
-	mlx_destroy_display(data->mlx_ptr);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
 }
 
 void	images_loop(t_data *data)

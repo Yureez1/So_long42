@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:40 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/20 14:14:44 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:00:32 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int render(t_data *data)
 	if(data->win_ptr == NULL)
 		return(1);
 	x = 0;
-	y = 0;
-	width = 0;
 	while(data->map.grid[x])
 	{
+		y = 0;
+		width = 0;
 		while(data->map.grid[x][y] && data->map.grid[x][y] != '\n')
 		{
 			parse_chars(data, width, x, y);
