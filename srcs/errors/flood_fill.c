@@ -6,170 +6,108 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/26 11:16:58 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:59:11 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	is_out(int x, int y, int size_x, int size_y)
+void	ft_copy(t_data *data, char *filename, char **map_copy)
 {
-	return (x < 0 || x >= size_x || y < 0 || y >= size_y);
-}
+	int		i;
+	int		j;
+	int		fd;
+	char	*str;
 
-int	to_find(char *str, char c)
-{
-	while (*str)
+	fd = open(filename, O_RDONLY);
+	i = 0;
+	while (i < data->map.line_count)
 	{
-		if (*str == c)
-			return (1);
-		str++;
+		str = get_next_line(fd);
+		if (!str)
+			return ;
+		map_copy[i] = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+		if (!map_copy[i])
+			error_msg("Malloc!\n", data);
+		j = 0;
+		while (str[j])
+		{
+			map_copy[i][j] = str[j];
+			j++;
+		}
+		free(str);
+		i++;
 	}
-	return (0);
+	map_copy[i] = NULL;
 }
 
-int	flood_fill(t_data *data, char **map_clone, t_vector pos, char *str)
+void	ft_free_copy(t_data *data, char **map_copy)
 {
-	int	elements_count;
+	int	i;
 
-	elements_count = 0;
-	printf("Player Position: (%d, %d)\n", data->player_pos.x, data->player_pos.y);
-	printf("Player is at: %c\n", data->map.grid[data->player_pos.y][data->player_pos.x]);
-	if (is_out(pos.x, pos.y, data->map.width, data->map.height)
-		|| map_clone[pos.y][pos.x] == '1' || map_clone[pos.y][pos.x] == 'V')
-		return (0);
-	if (to_find(str, map_clone[pos.y][pos.x]))
+	i = 0;
+	while (i < data->map.line_count)
 	{
-		elements_count = 1;
-		printf("Found element: %c at (%d, %d)\n", map_clone[pos.y][pos.x], pos.x, pos.y);
+		free(map_copy[i]);
+		i++;
 	}
-	printf("Flood fill at (%d, %d) - current cell: %c\n", pos.x, pos.y, map_clone[pos.y][pos.x]);
-	map_clone[pos.y][pos.x] = 'V';
-	elements_count += flood_fill(data, map_clone, (t_vector){pos.x - 1, pos.y},
-			str);
-	elements_count += flood_fill(data, map_clone, (t_vector){pos.x + 1, pos.y},
-			str);
-	elements_count += flood_fill(data, map_clone, (t_vector){pos.x, pos.y - 1},
-			str);
-	elements_count += flood_fill(data, map_clone, (t_vector){pos.x, pos.y + 1},
-			str);
-	return (elements_count);
+	free(map_copy);
 }
 
-int	total_elements(t_data *data, char **map_clone, char *elements)
+void	ft_duplicate(t_data *data, char *filename)
 {
-	int	total_count;
+	int		i;
+	int		j;
+	char	**map_copy;
+
+	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
+	if (!map_copy)
+		error_msg("Copied Map!n", data);
+	ft_copy(data, filename, map_copy);
+	init_player(data);
+	flood_fill(data, map_copy, (t_vector){data->player_x, data->player_pos.y});
+	i = 0;
+	while (i < data->map.line_count)
+	{
+		j = 0;
+		while (map_copy[i][j])
+		{
+			printf("%c", map_copy[i][j]);
+			if (map_copy[i][j] == 'E' || map_copy[i][j] == 'C')
+			{
+				printf("Unreachable element '%c' found at [%d, %d]\n",
+					map_copy[i][j], i, j);
+				error_msg("Flood Fill! Element not reachable!\n", data);
+			}
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	ft_free_copy(data, map_copy);
+}
+
+void	flood_fill(t_data *data, char **map_copy, t_vector pos)
+{
 	int	x;
 	int	y;
 
-	total_count = 0;
-	y = 0;
-	while (y < data->map.height)
+	x = pos.x;
+	y = pos.y;
+	printf("Flood Fill called with x = %d, y = %d\n", x, y);
+	if (x < 0 || y < 0 || y >= data->map.line_count
+		|| x >= (int)ft_strlen(data->map.grid[0]))
 	{
-		x = 0;
-		while (x < data->map.width)
-		{
-			if (to_find(elements, map_clone[y][x]))
-			{
-				total_count++;
-				printf("Counting element: %c at (%d, %d)\n", map_clone[y][x], x, y);
-			}
-			x++;
-		}
-		y++;
+		printf("Map height %d\n", data->map.line_count);
+		printf("Map width %d\n", (int)ft_strlen(data->map.grid[0]));
+		error_msg("Out of borders\n", data);
+		return ;
 	}
-	return (total_count);
-}
-
-/*void	check_map_playability(t_data *data)
-{
-	char	**map_clone;
-	int		collected;
-	int		expected_elements;
-
-	map_clone = copy_map(data->map.grid, data->map.line_count);
-	if (!map_clone)
-		end_game("An error occurred saving the map", data, map_error, NULL);
-	expected_elements = total_elements(data, map_clone, "CPE");
-	printf("Expected elements (C, E, P): %d\n", expected_elements);
-	collected = flood_fill(data, map_clone, data->player_pos, "CP0");
-	printf("Expected: %d, Collected: %d\n", expected_elements, collected);
-	if (collected == expected_elements)
-	{
-		map_clone = copy_map(data->map.grid, data->map.line_count);
-		if (!map_clone)
-			end_game("Could not save the map.", data, map_error, NULL);
-		collected = flood_fill(data, map_clone, data->player_pos, "ECP0");
-		ft_free(map_clone);
-	}
-	if (collected != expected_elements)
-		end_game("Unplayable map.", data, map_error, NULL);
-	return ;
-}*/
-
-void check_map_playability(t_data *data)
-{
-    char **map_clone;
-    int collected;
-    int expected_elements;
-
-    map_clone = copy_map(data->map.grid, data->map.line_count);
-    if (!map_clone)
-        end_game("An error occurred saving the map", data, map_error, NULL);
-
-    expected_elements = total_elements(data, map_clone, "CPE");
-
-    // Check if player position is valid before using it
-    if (data->player_pos.x < 0 || data->player_pos.x >= data->map.width ||
-        data->player_pos.y < 0 || data->player_pos.y >= data->map.height)
-    {
-        fprintf(stderr, "Error: Invalid player position (%d, %d).\n",
-                data->player_pos.x, data->player_pos.y);
-        end_game("Invalid player position.", data, map_error, NULL);
-    }
-
-    printf("Player is at: %c\n", data->map.grid[data->player_pos.y][data->player_pos.x]);
-
-    collected = flood_fill(data, map_clone, data->player_pos, "CP0");
-    printf("Expected: %d, Collected: %d\n", expected_elements, collected);
-    if (collected == expected_elements)
-    {
-        map_clone = copy_map(data->map.grid, data->map.line_count);
-        if (!map_clone)
-            end_game("Could not save the map.", data, map_error, NULL);
-        collected = flood_fill(data, map_clone, data->player_pos, "ECP0");
-        ft_free(map_clone);
-    }
-    if (collected != expected_elements)
-        end_game("Unplayable map.", data, map_error, NULL);
-}
-
-
-
-char	**copy_map(char **grid, int line_count)
-{
-	char	**map_clone;
-	int		i;
-
-	i = 0;
-	map_clone = malloc(sizeof(char *) * (line_count + 1));
-	if (!map_clone)
-		return (NULL);
-	while (i < line_count)
-	{
-		map_clone[i] = ft_strdup(grid[i]);
-		if (!map_clone[i])
-		{
-			while (i > 0)
-			{
-				i--;
-				ft_free(map_clone);
-			}
-			ft_free(map_clone);
-			return (NULL);
-		}
-		i++;
-	}
-	map_clone[line_count] = NULL;
-	return (map_clone);
+	if (map_copy[y][x] == '1' || map_copy[y][x] == 'V')
+		return ;
+	map_copy[y][x] = 'V';
+	flood_fill(data, map_copy, (t_vector){x, y + 1});
+	flood_fill(data, map_copy, (t_vector){x, y - 1});
+	flood_fill(data, map_copy, (t_vector){x + 1, y});
+	flood_fill(data, map_copy, (t_vector){x - 1, y});
 }

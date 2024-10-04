@@ -28,17 +28,10 @@ Textures
 Errors
 **
 */
-enum			e_state
-{
-	event_end = -1,
-	map_error = 2,
-	file_error = 3,
-};
-#define ERRORCHR NULL
-#define SUCCESS 0
-#define FAILURE -1
-#define ERROR -2
-
+# define ERRORCHR "Error Char"
+# define ERROR -1
+# define FAILURE 1
+# define SUCCESS 0
 /*
 **
 Keys mouvements
@@ -132,12 +125,10 @@ int				count_elements_in_map(t_data *data);
 int				check_chars(t_data *data);
 void			check_columns(t_data *data);
 void			check_rows(t_data *data);
-void			check_map_playability(t_data *data);
-int				flood_fill(t_data *data, char **map_clone, t_vector pos, char *str);
-void			free_grid(char **grid_copy, int line_count);
-char			**copy_map(char **grid, int line_count);
-int				total_elements(t_data *data, char **map_clone, char *elements);
-void			end_game(char *msg, t_data *data, enum e_state state, char *free_me);
+void			flood_fill(t_data *data, char **map_copy, t_vector pos);
+void			ft_duplicate(t_data *data, char *filename);
+void			ft_free_copy(t_data *data, char **map_copy);
+void			ft_copy(t_data *data, char *filename, char **map_copy);
 
 // Graphics
 int				render(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:24 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/26 12:25:28 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:04:00 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 		init_map(&data);
 		check_map(&data);
 		init_player(&data);
-		//check_map_playability(&data);
+		ft_duplicate(&data, argv[1]);
 		init_window(&data);
 		load_images(&data);
 		render(&data);

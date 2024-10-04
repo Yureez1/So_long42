@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:38 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/26 11:25:32 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:52:48 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,6 @@ int	allocate_map_rows(t_data *data)
 	if (data->map.line_count <= 0)
 		return (FAILURE);
 	data->map.grid = ft_calloc(data->map.line_count + 1, sizeof(char *));
-	if (!data->map.grid)
-	{
-		ft_free(data->map.grid);
-		return (FAILURE);
-	}
 	return (data->map.grid != NULL);
 }
 
