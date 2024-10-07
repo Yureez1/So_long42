@@ -6,13 +6,13 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/20 13:16:07 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:29:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void player_mouv(t_data *data, int x_offset, int y_offset)
+void player_mouv(t_data *data, int x_offset, int y_offset, char direction)
 {
 	int new_x;
 	int new_y;
@@ -28,8 +28,8 @@ void player_mouv(t_data *data, int x_offset, int y_offset)
 	}
 	if (data->map.grid[new_y][new_x] == 'E' && data->map.collectible_count == 0)
 	{
-		printf("Good Job! You won in %d steps\n", data->count_step);
 		destroy_image(data);
+		exit(0);
 	}
 	if (data->map.grid[new_y][new_x] != '1')
 	{
@@ -37,7 +37,7 @@ void player_mouv(t_data *data, int x_offset, int y_offset)
 		data->map.grid[new_y][new_x] = 'P';
 		data->player_x = new_x;
 		data->player_y = new_y;
-		data->count_step++;
+		print_count_step(data, direction);
 	}
 }
 

@@ -142,11 +142,12 @@ void			destroy_image(t_data *data);
 int				init_window(t_data *data);
 
 // Events
-void			player_mouv(t_data *data, int x_offset, int y_offset);
+void			player_mouv(t_data *data, int x_offset, int y_offset, char direction);
 void			check_next_mouv(t_data *data, int x_offset, int y_offset);
 int				handle_btnrelease(t_data *data);
 int				handle_keypress(int keysym, t_data *data);
 int				handle_resize(t_data *data);
 void			can_exit(t_data *data);
+int				print_count_step(t_data *data, char direction);
 
 #endif

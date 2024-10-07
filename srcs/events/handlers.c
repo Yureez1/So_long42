@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:51 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/20 11:48:03 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:29:58 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int handle_keypress(int keysym, t_data *data)
 		return (EXIT_SUCCESS);
 	}
 	else if(keysym == XK_w)
-		player_mouv(data, 0 , -1);
+		player_mouv(data, 0 , -1, 'w');
 	else if (keysym == XK_s)
-		player_mouv(data, 0, 1);
+		player_mouv(data, 0, 1, 's');
 	else if (keysym == XK_a)
-		player_mouv(data, -1, 0);
+		player_mouv(data, -1, 0, 'a');
 	else if (keysym == XK_d)
-		player_mouv(data, 1, 0);
+		player_mouv(data, 1, 0, 'd');
 	return (SUCCESS);
 }
 
