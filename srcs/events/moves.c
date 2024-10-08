@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/07 16:29:31 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:02:48 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void player_mouv(t_data *data, int x_offset, int y_offset, char direction)
 	if (data->map.grid[new_y][new_x] == 'E' && data->map.collectible_count == 0)
 	{
 		destroy_image(data);
+		ft_printf(RED"Good Job! You won with %d steps\n", data->count_step);
 		exit(0);
 	}
 	if (data->map.grid[new_y][new_x] != '1')

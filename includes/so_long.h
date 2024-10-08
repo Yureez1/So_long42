@@ -2,7 +2,7 @@
 # define SO_LONG_H
 
 # include "../ft_printf/ft_printf.h"
-# include "../libft/libft.h"
+# include "libft.h"
 # include "../mlx/mlx.h"
 # include "get_next_line.h"
 # include <X11/X.h>
@@ -125,9 +125,13 @@ int				count_elements_in_map(t_data *data);
 int				check_chars(t_data *data);
 void			check_columns(t_data *data);
 void			check_rows(t_data *data);
+int				is_ber_file(const char *filename);
+
+// Flood Fill
 void			flood_fill(t_data *data, char **map_copy, t_vector pos);
 void			ft_duplicate(t_data *data, char *filename);
 void			ft_free_copy(t_data *data, char **map_copy);
+void			copy_line(char *str, t_data *data, char **map_copy, int i);
 void			ft_copy(t_data *data, char *filename, char **map_copy);
 
 // Graphics
@@ -142,7 +146,8 @@ void			destroy_image(t_data *data);
 int				init_window(t_data *data);
 
 // Events
-void			player_mouv(t_data *data, int x_offset, int y_offset, char direction);
+void			player_mouv(t_data *data, int x_offset, int y_offset,
+					char direction);
 void			check_next_mouv(t_data *data, int x_offset, int y_offset);
 int				handle_btnrelease(t_data *data);
 int				handle_keypress(int keysym, t_data *data);

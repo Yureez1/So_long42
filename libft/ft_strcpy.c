@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 12:46:24 by julien            #+#    #+#             */
-/*   Updated: 2024/05/23 16:40:44 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/10/08 12:52:34 by jbanchon          #+#    #+#             */
+/*   Updated: 2024/10/08 14:53:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/so_long.h"
 
-int	ft_isdigit(int character)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	if (character >= '0' && character <= '9')
-		return (1);
-	return (0);
+	int i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

@@ -6,11 +6,11 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:11:22 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/06/04 15:16:37 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:53:23 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/so_long.h"
 
 int	ft_strcmp(const char *first, const char *second)
 {

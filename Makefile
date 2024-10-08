@@ -13,7 +13,9 @@ LIBFT_DIR = /home/jbanchon/github/Cercle_2/so_long42/libft
 FT_PRINTF_DIR = /home/jbanchon/github/Cercle_2/so_long42/ft_printf
 
 # Sources files
-SRCS = $(wildcard $(SRC_DIR)/init/*.c) \
+SRCS = $(wildcard $(FT_PRINTF_DIR)/*.c) \
+	$(wildcard $(LIBFT_DIR)/*.c) \
+	$(wildcard $(SRC_DIR)/init/*.c) \
 	$(wildcard $(SRC_DIR)/parsing/*.c) \
 	$(wildcard $(SRC_DIR)/errors/*.c) \
 	$(wildcard $(SRC_DIR)/graphics/*.c) \
@@ -21,8 +23,6 @@ SRCS = $(wildcard $(SRC_DIR)/init/*.c) \
 	$(SRC_DIR)/main.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c \
-	$(wildcard $(FT_PRINTF_DIR)/*.c) \
-	$(wildcard $(LIBFT_DIR)/*.c)
 
 # Objects files
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))

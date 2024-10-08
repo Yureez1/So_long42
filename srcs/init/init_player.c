@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:33 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/27 13:34:23 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/08 12:04:55 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	init_player(t_data *data)
 				data->player_y = y;
 				data->player_x = x;
 				data->player_pos = (t_vector){x, y};
-				printf("Player position found at: (%d, %d)\n", x, y); 
 			}
 			x++;
 		}

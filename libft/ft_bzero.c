@@ -6,11 +6,11 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 11:27:51 by julien            #+#    #+#             */
-/*   Updated: 2024/05/23 16:39:13 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:53:15 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/so_long.h"
 
 void	ft_bzero(void *s, size_t n)
 {
