@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:43 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/08 12:41:43 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:35:12 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_window(t_data *data)
 	if (data->mlx_ptr == NULL)
 		return (FAILURE);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win_width,
-				data->win_height, "So_long");
+			data->win_height, "So_long");
 	if (data->win_ptr == NULL)
 	{
 		mlx_destroy_display(data->mlx_ptr);
@@ -44,6 +44,7 @@ int	load_images(t_data *data)
 	return (SUCCESS);
 }
 
+
 void	destroy_image(t_data *data)
 {
 	mlx_destroy_image(data->mlx_ptr, data->sprites.player);
@@ -65,6 +66,7 @@ void	images_loop(t_data *data)
 {
 	mlx_loop_hook(data->mlx_ptr, render, data);
 	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, handle_keypress, data);
-	mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask, handle_btnrelease, data);
+	mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask, handle_btnrelease,
+		data);
 	mlx_loop(data->mlx_ptr);
 }

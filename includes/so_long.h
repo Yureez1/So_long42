@@ -2,9 +2,9 @@
 # define SO_LONG_H
 
 # include "../ft_printf/ft_printf.h"
-# include "libft.h"
 # include "../mlx/mlx.h"
 # include "get_next_line.h"
+# include "libft.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -23,6 +23,7 @@ Textures
 # define KEY "assets/key.xpm"
 # define PLAYER "assets/character.xpm"
 # define EXIT "assets/door.xpm"
+# define CHAR_EXIT "assets/charexit.xpm"
 /*
 **
 Errors
@@ -68,6 +69,7 @@ typedef struct s_sprites
 	void		*collectible;
 	void		*exit;
 	void		*floor;
+	void		*char_exit;
 	int			width;
 	int			height;
 }				t_sprites;
@@ -115,7 +117,6 @@ int				create_map(char *filename, t_data *data);
 void			init_map(t_data *data);
 int				init_player(t_data *data);
 int				count_elements_in_map(t_data *data);
-void			print_map_dimensions(t_data *data);
 
 // Errors
 void			error_msg(char *message, t_data *data);
@@ -146,13 +147,16 @@ void			destroy_image(t_data *data);
 int				init_window(t_data *data);
 
 // Events
-void			player_mouv(t_data *data, int x_offset, int y_offset,
-					char direction);
-void			check_next_mouv(t_data *data, int x_offset, int y_offset);
 int				handle_btnrelease(t_data *data);
 int				handle_keypress(int keysym, t_data *data);
 int				handle_resize(t_data *data);
-void			can_exit(t_data *data);
+
+// Player mouvements
+void			player_mouv(t_data *data, int x_offset, int y_offset,
+					char direction);
+void			collect_item(t_data *data, int new_x, int new_y);
+int				move_player(t_data *data, int new_x, int new_y);
+void			check_exit(t_data *data, int new_x, int new_y);
 int				print_count_step(t_data *data, char direction);
 
 #endif
