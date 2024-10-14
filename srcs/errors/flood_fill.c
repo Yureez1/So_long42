@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/13 23:15:18 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:46:32 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_copy(t_data *data, char *filename, char **map_copy)
 	if (fd < 0)
 	{
 		error_msg("Error: Cannot open file\n", data);
-		return;
+		return ;
 	}
 	i = 0;
 	while (i < data->map.line_count)
@@ -56,6 +56,8 @@ void	ft_copy(t_data *data, char *filename, char **map_copy)
 		free(str);
 		i++;
 	}
+	if (close(fd) < 0)
+		error_msg("Error closing file", data);
 }
 
 void	ft_free_copy(t_data *data, char **map_copy)
@@ -82,7 +84,8 @@ void	ft_free_copy(t_data *data, char **map_copy)
 		error_msg("Error: MALLOC\n", data);
 	ft_copy(data, filename, map_copy);
 	init_player(data);
-	flood_fill(data, map_copy, (t_vector){data->player_pos.x, data->player_pos.y});
+	flood_fill(data, map_copy, (t_vector){data->player_pos.x,
+		data->player_pos.y});
 	i = 0;
 	while (i < data->map.line_count)
 	{
@@ -96,9 +99,9 @@ void	ft_free_copy(t_data *data, char **map_copy)
 		i++;
 	}
 	ft_free_copy(data, map_copy);
-}
+}*/
 
-void	flood_fill(t_data *data, char **map_copy, t_vector pos)
+void	flood_fill(t_data *data, char **map_copy, t_vector pos, char target)
 {
 	int	x;
 	int	y;
@@ -108,73 +111,65 @@ void	flood_fill(t_data *data, char **map_copy, t_vector pos)
 	if (x < 0 || y < 0 || y >= data->map.line_count
 		|| x >= (int)ft_strlen(data->map.grid[0]))
 		error_msg("Out of borders\n", data);
+	if (map_copy[y][x] == 'E' && target == 'C')
+		return;
+	if (map_copy[y][x] == target)
+	{
+		if (target == 'E')
+			data->map.can_exit++;
+		else if (target == 'C')
+			data->map.collectibles_reached++;
+	}
 	if (map_copy[y][x] == '1' || map_copy[y][x] == 'V')
 		return ;
 	map_copy[y][x] = 'V';
-	flood_fill(data, map_copy, (t_vector){x, y + 1});
-	flood_fill(data, map_copy, (t_vector){x, y - 1});
-	flood_fill(data, map_copy, (t_vector){x + 1, y});
-	flood_fill(data, map_copy, (t_vector){x - 1, y});
-}*/
-
-void flood_fill(t_data *data, char **map_copy, t_vector pos)
-{
-    int x = pos.x;
-    int y = pos.y;
-
-    // Vérifier si on est hors des limites
-    if (x < 0 || y < 0 || y >= data->map.line_count
-        || x >= (int)ft_strlen(data->map.grid[0]))
-        return;
-
-    // Sortir si c'est un mur ou déjà visité
-    if (map_copy[y][x] == '1' || map_copy[y][x] == 'V')
-        return;
-
-    // Vérifier si on a atteint la sortie
-    if (map_copy[y][x] == 'E')
-        data->map.exit_reached = 1;
-
-    // Vérifier si on a atteint un collectible
-    if (map_copy[y][x] == 'C')
-        data->map.collectibles_reached++;
-
-    map_copy[y][x] = 'V'; // Marquer la case comme visitée
-
-    // Récursion pour toutes les directions
-    flood_fill(data, map_copy, (t_vector){x, y + 1});
-    flood_fill(data, map_copy, (t_vector){x, y - 1});
-    flood_fill(data, map_copy, (t_vector){x + 1, y});
-    flood_fill(data, map_copy, (t_vector){x - 1, y});
+	flood_fill(data, map_copy, (t_vector){x, y + 1}, target);
+	flood_fill(data, map_copy, (t_vector){x, y - 1}, target);
+	flood_fill(data, map_copy, (t_vector){x + 1, y}, target);
+	flood_fill(data, map_copy, (t_vector){x - 1, y}, target);
 }
 
-void ft_duplicate(t_data *data, char *filename)
+
+void	check_for_exit(t_data *data, char *filename)
 {
-    char **map_copy;
+	char	**map_copy;
 
-    map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
-    if (!map_copy)
-        error_msg("Error: MALLOC\n", data);
+	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
+	if (!map_copy)
+		error_msg("Error: MALLOC\n", data);
+	ft_copy(data, filename, map_copy);
+	init_player(data);
+	data->map.exit_reached = 0;
+	flood_fill(data, map_copy, (t_vector){data->player_pos.x,
+		data->player_pos.y}, 'E');
+	if (data->map.can_exit > 0)
+		ft_printf("Exit is reacheable\n");
+	else
+		error_msg("Error : Exit is not reacheable\n", data);
+	ft_free_copy(data, map_copy);
+}
 
-    ft_copy(data, filename, map_copy);
+void	check_for_collectibles(t_data *data, char *filename)
+{
+		char	**map_copy;
 
-    data->map.exit_reached = 0;
-    data->map.collectibles_reached = 0;
+	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
+	if (!map_copy)
+		error_msg("Error: MALLOC\n", data);
+	ft_copy(data, filename, map_copy);
+	init_player(data);
+	data->map.collectibles_reached = 0;
+	flood_fill(data, map_copy, (t_vector){data->player_pos.x,
+		data->player_pos.y}, 'C');
+	if (data->map.collectibles_reached == data->map.collectible_count)
+		ft_printf("Collectibles are reacheable\n");
+	else
+		error_msg("Collectibles are not reacheable\n", data);
+	ft_free_copy(data, map_copy);
+}
 
-    init_player(data);
-    flood_fill(data, map_copy, (t_vector){data->player_pos.x, data->player_pos.y});
-
-    // Vérifier que tous les collectibles ont été atteints
-    if (data->map.collectibles_reached != data->map.collectible_count)
-    {
-        error_msg("Error: Some collectibles are blocked by walls!\n", data);
-    }
-
-    // Vérifier que la sortie a été atteinte
-    if (!data->map.exit_reached)
-    {
-        error_msg("Error: Exit is not reachable!\n", data);
-    }
-
-    ft_free_copy(data, map_copy);
+void	ft_duplicate(t_data *data, char *filename)
+{
+	check_for_collectibles(data, filename);
+	check_for_exit(data, filename);
 }

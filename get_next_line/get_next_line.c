@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:29 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/09/04 19:34:37 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:00:34 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buf;
 	
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < -0 || BUFFER_SIZE <= 0)
 	{
 		if (stash)
 			free(stash);

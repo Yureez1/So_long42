@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:56 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/08 12:05:11 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:12:24 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_chars(t_data *data)
 		data->x = 0;
 		data->y++;
 	}
-	if (!data->map.player_count || !data->map.exit_count
+	if (data->map.player_count != 1 || data->map.exit_count != 1
 		|| !data->map.collectible_count)
 		return (FAILURE);
 	else
@@ -95,15 +95,48 @@ int	check_map(t_data *data)
 
 	i = 0;
 	j = 0;
+	for (int k = 0; data->map.grid[k]; k++)
+		printf("Row %d: %s\n", k, data->map.grid[k]);
 	while (data->map.grid[i])
 	{
 		while (j < ft_strlen(data->map.grid[i]) - 1)
 		{
 			if (ft_strchr("01CEP", data->map.grid[i][j]) == NULL)
-				error_msg(ERRORCHR, data);
+				error_msg("Cant find 01CEP", data);
 			j++;
 		}
 		j = 0;
+		i++;
+	}
+	if (check_chars(data) == FAILURE)
+		error_msg("Map need to have PEC", data);
+	if (data->map.player_count > 1)
+		error_msg("Map has to have 1 player", data);
+	if (check_rectangle(data) == FAILURE)
+		error_msg("Map has to be a rectangle", data);
+	if (check_edges(data->map.line_count - 1, data->map.grid) == FAILURE)
+		error_msg("Map has to be surrounded by walls", data);
+	return (SUCCESS);
+}
+
+/*int	check_map(t_data *data)
+{
+	int		i;
+	size_t	j;
+	size_t	len;
+
+	if (data == NULL || data->map.grid == NULL) // Check for NULL pointers
+		return (FAILURE);
+	i = 0;
+	while (data->map.grid[i])
+	{
+		len = ft_strlen(data->map.grid[i]);
+		while (j < len)
+		{
+			if (ft_strchr("01CEP", data->map.grid[i][j]) == NULL)
+				error_msg(ERRORCHR, data);
+			j++;
+		}
 		i++;
 	}
 	if (check_chars(data) == FAILURE)
@@ -115,4 +148,5 @@ int	check_map(t_data *data)
 	if (check_edges(data->map.line_count - 1, data->map.grid) == FAILURE)
 		error_msg(ERRORCHR, data);
 	return (SUCCESS);
-}
+}*/
+

@@ -2,9 +2,9 @@
 # define SO_LONG_H
 
 # include "../ft_printf/ft_printf.h"
+# include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include "get_next_line.h"
-# include "../libft/libft.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -131,7 +131,10 @@ void			check_rows(t_data *data);
 int				is_ber_file(const char *filename);
 
 // Flood Fill
-void			flood_fill(t_data *data, char **map_copy, t_vector pos);
+void			flood_fill(t_data *data, char **map_copy, t_vector pos,
+					char target);
+void			check_for_exit(t_data *data, char *filename);
+void			check_for_collectibles(t_data *data, char *filename);
 void			ft_duplicate(t_data *data, char *filename);
 void			ft_free_copy(t_data *data, char **map_copy);
 void			copy_line(char *str, t_data *data, char **map_copy, int i);

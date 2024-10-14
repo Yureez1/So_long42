@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:38 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/08 12:04:38 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:39:56 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	returned_line(char *filename)
 	if (fd < 0)
 		return (ERROR);
 	line = get_next_line(fd);
+	if (line == NULL)
+		return (free(line), 1);
 	while (line)
 	{
 		line_count++;
