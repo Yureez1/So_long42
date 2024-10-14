@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 15:11:22 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/06/04 15:16:37 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/06/03 10:33:52 by jbanchon          #+#    #+#             */
+/*   Updated: 2024/06/03 11:42:14 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp(const char *first, const char *second)
+t_list	*ft_lstlast(t_list *lst)
 {
-	int	i;
-
-	i = 0;
-	while (first[i] && second[i] && first[i] == second[i])
-		i++;
-	return ((unsigned char)first[i] - (unsigned char)second[i]);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+	{
+		lst = lst->next;
+	}
+	return (lst);
 }

@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 15:11:22 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/06/04 15:16:37 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/04/24 17:10:11 by julien            #+#    #+#             */
+/*   Updated: 2024/05/31 11:13:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp(const char *first, const char *second)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	while (first[i] && second[i] && first[i] == second[i])
+	if (!little && !big)
+		return (NULL);
+	if (!little[0])
+		return ((char *)big);
+	while (big[i] && i < len)
+	{
+		j = 0;
+		while (big[i + j] && little[j]
+			&& i + j < len && big[i + j] == little[j])
+			j++;
+		if (!little[j])
+			return ((char *)(big + i));
 		i++;
-	return ((unsigned char)first[i] - (unsigned char)second[i]);
+	}
+	return (NULL);
 }

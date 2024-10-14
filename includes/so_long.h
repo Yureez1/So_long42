@@ -4,7 +4,7 @@
 # include "../ft_printf/ft_printf.h"
 # include "../mlx/mlx.h"
 # include "get_next_line.h"
-# include "libft.h"
+# include "../libft/libft.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -86,6 +86,8 @@ typedef struct s_map
 	int			can_exit;
 	int			line_count;
 	size_t		line_len;
+	int			exit_reached;
+	int			collectibles_reached;
 }				t_map;
 
 typedef struct s_data

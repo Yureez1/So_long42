@@ -6,11 +6,11 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:58:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/08 14:53:18 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:07:53 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "libft.h"
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {

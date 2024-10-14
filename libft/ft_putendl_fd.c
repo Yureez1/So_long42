@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 15:11:22 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/06/04 15:16:37 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/05/30 15:10:43 by jbanchon          #+#    #+#             */
+/*   Updated: 2024/05/31 10:35:40 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp(const char *first, const char *second)
+void	ft_putendl_fd(char *s, int fd)
 {
 	int	i;
 
 	i = 0;
-	while (first[i] && second[i] && first[i] == second[i])
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
 		i++;
-	return ((unsigned char)first[i] - (unsigned char)second[i]);
+	}
+	write(fd, "\n", 1);
 }

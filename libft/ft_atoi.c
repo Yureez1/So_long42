@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 18:27:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/08 14:51:10 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/05/21 11:19:29 by jbanchon          #+#    #+#             */
+/*   Updated: 2024/05/29 14:58:06 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	sign;
+	int	nb;
 
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t nmemb, size_t size);
-void	*ft_memset(void *pointer, int value, size_t count);
-size_t	ft_strlen(char const *str);
-char	*ft_strcpy(char *dest, const char *src);
-char	*ft_strchr(const char *s, int c);
-int		ft_strcmp(const char *first, const char *second);
-
-#endif
+	i = 0;
+	sign = 1;
+	nb = 0;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || (nptr[i] == 32))
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		nb = (nb * 10) + (nptr[i] - '0');
+		i++;
+	}
+	return (nb * sign);
+}

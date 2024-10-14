@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/11 17:34:48 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:11:35 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	player_mouv(t_data *data, int x_offset, int y_offset, char direction)
 
 	new_x = data->player_x + x_offset;
 	new_y = data->player_y + y_offset;
+	if (data->map.grid[new_y][new_x] == 'E')
+		return ;
 	collect_item(data, new_x, new_y);
 	check_exit(data, new_x, new_y);
 	if (move_player(data, new_x, new_y))
