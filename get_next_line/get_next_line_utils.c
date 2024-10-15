@@ -6,14 +6,14 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:26 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/14 17:00:45 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:59:46 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
 // TO EXTRACT A SUB STRING
-char	*ft_substr(const char *s, size_t start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;
 	size_t	i;

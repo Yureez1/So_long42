@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:29 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/14 17:00:34 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:57:40 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,15 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buf;
 	
-	if (fd < -0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (stash)
-			free(stash);
+		free(stash);
 		stash = NULL;
 		return (NULL);
 	}
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buf || read(fd, buf, 0) < 0)
-	{
-		free(stash);
-		free(buf);
-		stash = NULL;
-		return (NULL);
-	}
+	if (!buf || fd < 0)
+		return(NULL);
 	line = ft_fill_buffer(fd, stash, buf);
 	free(buf);
 	if (!line)
@@ -45,6 +39,7 @@ char	*get_next_line(int fd)
 	stash = ft_define_line(line);
 	return (line);
 }
+
 
 // FONCTION QUI LIT LE FICHIER
 char	*ft_fill_buffer(int fd, char *stash, char *buf)
@@ -57,17 +52,18 @@ char	*ft_fill_buffer(int fd, char *stash, char *buf)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
-		{
-			free(stash);
-			return (NULL);
-		}
+			return(free(stash), NULL);
 		else if (read_bytes == 0)
 			break ;
 		buf[read_bytes] = '\0';
 		if (!stash)
 			stash = ft_strdup("");
+		if (!stash)
+			return (NULL);
 		temp = stash;
 		stash = ft_strjoin(temp, buf);
+		if (!stash)
+			return (free(stash), NULL);
 		free(temp);
 		if (ft_strchr(buf, '\n'))
 			break ;
@@ -90,7 +86,9 @@ char	*ft_define_line(char *line_buf)
 	{
 		free(stash);
 		stash = NULL;
+		return (NULL);
 	}
 	line_buf[i + 1] = '\0';
 	return (stash);
 }
+

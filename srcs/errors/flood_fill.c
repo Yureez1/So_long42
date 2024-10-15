@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/14 12:46:32 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:13:00 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	copy_line(char *str, t_data *data, char **map_copy, int i)
 	{
 		ft_free_copy(data, map_copy);
 		error_msg("Error: MALLOC\n", data);
+		return;
 	}
 	j = 0;
 	while (str[j] != '\0')
@@ -49,15 +50,15 @@ void	ft_copy(t_data *data, char *filename, char **map_copy)
 		str = get_next_line(fd);
 		if (!str)
 		{
-			map_copy[i] = NULL;
-			break ;
+			ft_free_copy(data, map_copy);
+			close(fd);
+			return ;
 		}
 		copy_line(str, data, map_copy, i);
 		free(str);
 		i++;
 	}
-	if (close(fd) < 0)
-		error_msg("Error closing file", data);
+	close(fd);
 }
 
 void	ft_free_copy(t_data *data, char **map_copy)
@@ -65,41 +66,16 @@ void	ft_free_copy(t_data *data, char **map_copy)
 	int	i;
 
 	i = 0;
-	while (i < data->map.line_count)
+	if (map_copy)
 	{
-		free(map_copy[i]);
-		i++;
-	}
-	free(map_copy);
-}
-
-/*void	ft_duplicate(t_data *data, char *filename)
-{
-	int		i;
-	int		j;
-	char	**map_copy;
-
-	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
-	if (!map_copy)
-		error_msg("Error: MALLOC\n", data);
-	ft_copy(data, filename, map_copy);
-	init_player(data);
-	flood_fill(data, map_copy, (t_vector){data->player_pos.x,
-		data->player_pos.y});
-	i = 0;
-	while (i < data->map.line_count)
-	{
-		j = 0;
-		while (map_copy[i][j])
+		while (i < data->map.line_count)
 		{
-			if (map_copy[i][j] == 'E' || map_copy[i][j] == 'C')
-				error_msg("Flood Fill! Element not reachable!\n", data);
-			j++;
+			free(map_copy[i]);
+			i++;
 		}
-		i++;
+		free(map_copy);
 	}
-	ft_free_copy(data, map_copy);
-}*/
+}
 
 void	flood_fill(t_data *data, char **map_copy, t_vector pos, char target)
 {
@@ -110,9 +86,12 @@ void	flood_fill(t_data *data, char **map_copy, t_vector pos, char target)
 	y = pos.y;
 	if (x < 0 || y < 0 || y >= data->map.line_count
 		|| x >= (int)ft_strlen(data->map.grid[0]))
+	{
 		error_msg("Out of borders\n", data);
+		return ;
+	}
 	if (map_copy[y][x] == 'E' && target == 'C')
-		return;
+		return ;
 	if (map_copy[y][x] == target)
 	{
 		if (target == 'E')
@@ -129,14 +108,16 @@ void	flood_fill(t_data *data, char **map_copy, t_vector pos, char target)
 	flood_fill(data, map_copy, (t_vector){x - 1, y}, target);
 }
 
-
 void	check_for_exit(t_data *data, char *filename)
 {
 	char	**map_copy;
 
 	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
 	if (!map_copy)
+	{
 		error_msg("Error: MALLOC\n", data);
+		return ;
+	}
 	ft_copy(data, filename, map_copy);
 	init_player(data);
 	data->map.exit_reached = 0;
@@ -151,11 +132,14 @@ void	check_for_exit(t_data *data, char *filename)
 
 void	check_for_collectibles(t_data *data, char *filename)
 {
-		char	**map_copy;
+	char	**map_copy;
 
 	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
 	if (!map_copy)
+	{
 		error_msg("Error: MALLOC\n", data);
+		return ;
+	}
 	ft_copy(data, filename, map_copy);
 	init_player(data);
 	data->map.collectibles_reached = 0;

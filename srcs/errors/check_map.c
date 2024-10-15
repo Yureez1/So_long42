@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:56 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/14 16:12:24 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:35:57 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ int	check_map(t_data *data)
 
 	i = 0;
 	j = 0;
-	for (int k = 0; data->map.grid[k]; k++)
-		printf("Row %d: %s\n", k, data->map.grid[k]);
 	while (data->map.grid[i])
 	{
 		while (j < ft_strlen(data->map.grid[i]) - 1)
