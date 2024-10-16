@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:56:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/15 18:13:00 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:09:29 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	copy_line(char *str, t_data *data, char **map_copy, int i)
 {
 	int	j;
 
-	map_copy[i] = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	map_copy[i] = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
 	if (!map_copy[i])
 	{
 		ft_free_copy(data, map_copy);
 		error_msg("Error: MALLOC\n", data);
-		return;
+		return ;
 	}
 	j = 0;
 	while (str[j] != '\0')
@@ -29,7 +29,7 @@ void	copy_line(char *str, t_data *data, char **map_copy, int i)
 		map_copy[i][j] = str[j];
 		j++;
 	}
-	map_copy[i][j] = '\0';
+	map_copy[i][j] = '\0';\
 }
 
 void	ft_copy(t_data *data, char *filename, char **map_copy)
@@ -52,7 +52,7 @@ void	ft_copy(t_data *data, char *filename, char **map_copy)
 		{
 			ft_free_copy(data, map_copy);
 			close(fd);
-			return ;
+			return;
 		}
 		copy_line(str, data, map_copy, i);
 		free(str);
@@ -70,10 +70,15 @@ void	ft_free_copy(t_data *data, char **map_copy)
 	{
 		while (i < data->map.line_count)
 		{
-			free(map_copy[i]);
+			if (map_copy[i])
+			{
+				free(map_copy[i]);
+				map_copy[i] = NULL;
+			}
 			i++;
 		}
 		free(map_copy);
+		map_copy = NULL;
 	}
 }
 
@@ -86,10 +91,7 @@ void	flood_fill(t_data *data, char **map_copy, t_vector pos, char target)
 	y = pos.y;
 	if (x < 0 || y < 0 || y >= data->map.line_count
 		|| x >= (int)ft_strlen(data->map.grid[0]))
-	{
 		error_msg("Out of borders\n", data);
-		return ;
-	}
 	if (map_copy[y][x] == 'E' && target == 'C')
 		return ;
 	if (map_copy[y][x] == target)
@@ -112,21 +114,24 @@ void	check_for_exit(t_data *data, char *filename)
 {
 	char	**map_copy;
 
-	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
+	map_copy = (char **)malloc((data->map.line_count + 1) * sizeof(char *));
 	if (!map_copy)
 	{
 		error_msg("Error: MALLOC\n", data);
-		return ;
+		return;
 	}
 	ft_copy(data, filename, map_copy);
 	init_player(data);
-	data->map.exit_reached = 0;
+	data->map.can_exit = 0;
 	flood_fill(data, map_copy, (t_vector){data->player_pos.x,
 		data->player_pos.y}, 'E');
 	if (data->map.can_exit > 0)
 		ft_printf("Exit is reacheable\n");
 	else
+	{
+		ft_free_copy(data, map_copy);
 		error_msg("Error : Exit is not reacheable\n", data);
+	}
 	ft_free_copy(data, map_copy);
 }
 
@@ -134,11 +139,11 @@ void	check_for_collectibles(t_data *data, char *filename)
 {
 	char	**map_copy;
 
-	map_copy = (char **)malloc(sizeof(char *) * (data->map.line_count + 1));
+	map_copy = (char **)malloc((data->map.line_count + 1) * sizeof(char *));
 	if (!map_copy)
 	{
 		error_msg("Error: MALLOC\n", data);
-		return ;
+		return;
 	}
 	ft_copy(data, filename, map_copy);
 	init_player(data);
@@ -148,7 +153,10 @@ void	check_for_collectibles(t_data *data, char *filename)
 	if (data->map.collectibles_reached == data->map.collectible_count)
 		ft_printf("Collectibles are reacheable\n");
 	else
+	{
+		ft_free_copy(data, map_copy);
 		error_msg("Collectibles are not reacheable\n", data);
+	}
 	ft_free_copy(data, map_copy);
 }
 

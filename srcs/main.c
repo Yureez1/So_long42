@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:24 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/14 16:07:22 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:49:57 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ int	main(int argc, char **argv)
 	else
 	{
 		create_map(argv[1], &data);
-		printf("Create Map OK\n");
 		init_map(&data);
-		printf("Init map OK\n");
 		check_map(&data);
-		printf("Check map OK\n");
 		init_player(&data);
 		ft_duplicate(&data, argv[1]);
+		check_image_exist(&data);
 		init_window(&data);
 		load_images(&data);
 		render(&data);

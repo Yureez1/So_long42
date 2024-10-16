@@ -12,6 +12,8 @@
 # include <string.h>
 # include <unistd.h>
 
+# define X_EVENT_KEY_EXIT 17
+
 /*
 **
 Textures
@@ -23,7 +25,7 @@ Textures
 # define KEY "assets/key.xpm"
 # define PLAYER "assets/character.xpm"
 # define EXIT "assets/door.xpm"
-# define CHAR_EXIT "assets/charexit.xpm"
+# define NUMBER_IMAGE 5
 /*
 **
 Errors
@@ -116,7 +118,7 @@ int				returned_line(char *filename);
 void			set_input_map(int row, int fd, t_data *data);
 int				allocate_map_rows(t_data *data);
 int				create_map(char *filename, t_data *data);
-void			init_map(t_data *data);
+int				init_map(t_data *data);
 int				init_player(t_data *data);
 int				count_elements_in_map(t_data *data);
 
@@ -129,6 +131,7 @@ int				check_chars(t_data *data);
 void			check_columns(t_data *data);
 void			check_rows(t_data *data);
 int				is_ber_file(const char *filename);
+void			check_image_exist(t_data *data);
 
 // Flood Fill
 void			flood_fill(t_data *data, char **map_copy, t_vector pos,
@@ -155,6 +158,7 @@ int				init_window(t_data *data);
 int				handle_btnrelease(t_data *data);
 int				handle_keypress(int keysym, t_data *data);
 int				handle_resize(t_data *data);
+int				close_window(t_data *data);
 
 // Player mouvements
 void			player_mouv(t_data *data, int x_offset, int y_offset,

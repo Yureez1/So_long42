@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:56 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/15 17:35:57 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:40:54 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,35 +116,3 @@ int	check_map(t_data *data)
 		error_msg("Map has to be surrounded by walls", data);
 	return (SUCCESS);
 }
-
-/*int	check_map(t_data *data)
-{
-	int		i;
-	size_t	j;
-	size_t	len;
-
-	if (data == NULL || data->map.grid == NULL) // Check for NULL pointers
-		return (FAILURE);
-	i = 0;
-	while (data->map.grid[i])
-	{
-		len = ft_strlen(data->map.grid[i]);
-		while (j < len)
-		{
-			if (ft_strchr("01CEP", data->map.grid[i][j]) == NULL)
-				error_msg(ERRORCHR, data);
-			j++;
-		}
-		i++;
-	}
-	if (check_chars(data) == FAILURE)
-		error_msg(ERRORCHR, data);
-	if (data->map.player_count > 1)
-		error_msg(ERRORCHR, data);
-	if (check_rectangle(data) == FAILURE)
-		error_msg(ERRORCHR, data);
-	if (check_edges(data->map.line_count - 1, data->map.grid) == FAILURE)
-		error_msg(ERRORCHR, data);
-	return (SUCCESS);
-}*/
-

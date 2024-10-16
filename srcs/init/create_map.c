@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:38 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/14 14:39:56 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:23:17 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,21 @@ void	set_input_map(int row, int fd, t_data *data)
 }
 
 int	allocate_map_rows(t_data *data)
-{
+{	
+	int i;
+
 	if (data->map.line_count <= 0)
 		return (FAILURE);
-	data->map.grid = ft_calloc(data->map.line_count + 1, sizeof(char *));
-	return (data->map.grid != NULL);
+	data->map.grid = (char **)malloc((data->map.line_count + 1) * sizeof(char *));
+	if (data->map.grid == NULL)
+		return (FAILURE);
+	i = 0;
+	while (i < data->map.line_count + 1)
+	{
+		data->map.grid[i] = NULL;
+		i++;
+	}
+	return (1);
 }
 
 int	create_map(char *filename, t_data *data)
