@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:59 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/13 23:09:07 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:59:39 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,3 @@ int	is_ber_file(const char *filename)
 		return (0);
 	return (ft_strncmp(filename + ft_strlen(filename) - 4, ".ber", 4) == 0);
 }
-

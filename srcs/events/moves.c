@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:46 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/14 12:11:09 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:59:25 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	check_exit(t_data *data, int new_x, int new_y)
 	}
 }
 
-int move_player(t_data *data, int new_x, int new_y)
+int	move_player(t_data *data, int new_x, int new_y)
 {
 	if (data->map.grid[new_y][new_x] != '1')
 	{
@@ -45,7 +45,6 @@ int move_player(t_data *data, int new_x, int new_y)
 	}
 	return (0);
 }
-
 
 void	player_mouv(t_data *data, int x_offset, int y_offset, char direction)
 {

@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:37:47 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/16 18:57:04 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:01:02 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	load_images(t_data *data)
 char	*get_xpm_filename(int i)
 {
 	static char	*xpm_filename[] = {"assets/character.xpm", "assets/door.xpm",
-			"assets/floor.xpm", "assets/key.xpm", "assets/wall.xpm"};
+		"assets/floor.xpm", "assets/key.xpm", "assets/wall.xpm"};
 
 	return (xpm_filename[i]);
 }

@@ -6,14 +6,11 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:38 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/16 12:23:17 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:59:11 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
 
 void	ft_free(char **tab)
 {
@@ -21,7 +18,7 @@ void	ft_free(char **tab)
 
 	i = 0;
 	if (!tab)
-		return;
+		return ;
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -57,7 +54,7 @@ void	set_input_map(int row, int fd, t_data *data)
 {
 	int		column;
 	char	*line;
-	
+
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -67,7 +64,7 @@ void	set_input_map(int row, int fd, t_data *data)
 		{
 			ft_free(data->map.grid);
 			close(fd);
-			return;
+			return ;
 		}
 		while (line[column] != '\0')
 		{
@@ -83,12 +80,13 @@ void	set_input_map(int row, int fd, t_data *data)
 }
 
 int	allocate_map_rows(t_data *data)
-{	
-	int i;
+{
+	int	i;
 
 	if (data->map.line_count <= 0)
 		return (FAILURE);
-	data->map.grid = (char **)malloc((data->map.line_count + 1) * sizeof(char *));
+	data->map.grid = (char **)malloc((data->map.line_count + 1)
+			* sizeof(char *));
 	if (data->map.grid == NULL)
 		return (FAILURE);
 	i = 0;
@@ -102,14 +100,14 @@ int	allocate_map_rows(t_data *data)
 
 int	create_map(char *filename, t_data *data)
 {
-	int fd;
-	int row;
+	int	fd;
+	int	row;
 
 	data->map.line_count = returned_line(filename);
-	if(data->map.line_count <= 0)
+	if (data->map.line_count <= 0)
 		return (FAILURE);
 	fd = open(filename, O_RDONLY);
-	if(fd < 0 || !allocate_map_rows(data))
+	if (fd < 0 || !allocate_map_rows(data))
 	{
 		if (fd >= 0)
 			close(fd);
