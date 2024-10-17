@@ -2,7 +2,7 @@ NAME = so_long
 
 # Compilation and options
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 
 # Path to directories
 SRC_DIR = srcs
@@ -37,6 +37,7 @@ all: $(NAME)
 # Final compilation program
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_FLAGS) -o $(NAME)
+	@echo "\033[0;32mEverything Compiled\033[0m"
 
 # Compilation objects files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

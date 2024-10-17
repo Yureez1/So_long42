@@ -44,10 +44,6 @@ Keys mouvements
 # define D 100
 # define S 115
 # define W 119
-# define ARROW_TOP 65362
-# define ARROW_BOT 65364
-# define ARROW_LEFT 65361
-# define ARROW_RIGHT 65363
 
 /*
 **
@@ -120,16 +116,14 @@ int				allocate_map_rows(t_data *data);
 int				create_map(char *filename, t_data *data);
 int				init_map(t_data *data);
 int				init_player(t_data *data);
-int				count_elements_in_map(t_data *data);
 
 // Errors
 void			error_msg(char *message, t_data *data);
-void			map_parameters(t_data *data);
 int				check_map(t_data *data);
-int				count_elements_in_map(t_data *data);
 int				check_chars(t_data *data);
-void			check_columns(t_data *data);
-void			check_rows(t_data *data);
+int				check_top_bot(int row, char **grid);
+int				check_edges(int line_count, char **grid);
+int				check_rectangle(t_data *data);
 int				is_ber_file(const char *filename);
 void			check_image_exist(t_data *data);
 
@@ -145,11 +139,7 @@ void			ft_copy(t_data *data, char *filename, char **map_copy);
 
 // Graphics
 int				render(t_data *data);
-void			render_background(t_data *data);
-void			render_elements(t_data *data);
-void			core_render(t_data *data);
 int				load_images(t_data *data);
-void			put_img(t_data *data, void *sprite, int x, int y);
 void			images_loop(t_data *data);
 void			destroy_image(t_data *data);
 int				init_window(t_data *data);

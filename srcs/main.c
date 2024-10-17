@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:16:24 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/16 18:49:57 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:40:27 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char **argv)
 		check_map(&data);
 		init_player(&data);
 		ft_duplicate(&data, argv[1]);
-		check_image_exist(&data);
 		init_window(&data);
+		check_image_exist(&data);
 		load_images(&data);
 		render(&data);
 		images_loop(&data);
