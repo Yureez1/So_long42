@@ -6,13 +6,13 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:58:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/16 12:19:44 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:11:11 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
 
@@ -23,4 +23,4 @@
 		return (NULL);
 	ft_memset(ptr, 0, nmemb * size);
 	return (ptr);
-}*/
+}

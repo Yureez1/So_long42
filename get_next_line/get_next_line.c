@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:29 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/15 16:57:40 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:21:16 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 	char		*buf;
-	
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		free(stash);
@@ -31,7 +31,7 @@ char	*get_next_line(int fd)
 	}
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf || fd < 0)
-		return(NULL);
+		return (NULL);
 	line = ft_fill_buffer(fd, stash, buf);
 	free(buf);
 	if (!line)
@@ -39,7 +39,6 @@ char	*get_next_line(int fd)
 	stash = ft_define_line(line);
 	return (line);
 }
-
 
 // FONCTION QUI LIT LE FICHIER
 char	*ft_fill_buffer(int fd, char *stash, char *buf)
@@ -52,7 +51,7 @@ char	*ft_fill_buffer(int fd, char *stash, char *buf)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return(free(stash), NULL);
+			return (free(stash), NULL);
 		else if (read_bytes == 0)
 			break ;
 		buf[read_bytes] = '\0';
@@ -91,4 +90,3 @@ char	*ft_define_line(char *line_buf)
 	line_buf[i + 1] = '\0';
 	return (stash);
 }
-

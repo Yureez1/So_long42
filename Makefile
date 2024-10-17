@@ -8,9 +8,9 @@ CFLAGS = -Wall -Werror -Wextra
 SRC_DIR = srcs
 OBJ_DIR = objs
 INCLUDE_DIR = includes
-MLX_DIR = /home/jbanchon/github/Cercle_2/so_long42/mlx
-LIBFT_DIR = /home/jbanchon/github/Cercle_2/so_long42/libft
-FT_PRINTF_DIR = /home/jbanchon/github/Cercle_2/so_long42/ft_printf
+MLX_DIR = mlx
+LIBFT_DIR = libft
+FT_PRINTF_DIR = ft_printf
 
 # Sources files
 SRCS = $(wildcard $(FT_PRINTF_DIR)/*.c) \

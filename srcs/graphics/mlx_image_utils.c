@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:37:47 by jbanchon          #+#    #+#             */
-/*   Updated: 2024/10/17 11:50:16 by jbanchon         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:20:56 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	check_image_exist(t_data *data)
 	int		i;
 	int		fd;
 	char	*filename;
-	
+
 	(void)data;
 	i = 0;
 	while (i < NUMBER_IMAGE)
